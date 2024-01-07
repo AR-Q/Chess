@@ -11,11 +11,14 @@ namespace Chess.Classes
     {
         public List<Piece> Pieces { get; set; }
         public ChessTree ChessTree { get; set; }
+        public FileManager fileManager;
 
-        public Game(Button[,] Buttons)
+        public Game(Button[,] Buttons, string filePath)
         {
+            
             Pieces = new List<Piece>();
             ChessTree = new ChessTree();
+            fileManager = new FileManager(filePath);
 
             Node node = new Node
             {
@@ -39,6 +42,7 @@ namespace Chess.Classes
             };
 
             ChessTree.AddNode(node);
+            fileManager.WriteFile(node);
 
 
             Pieces.Add(new Rook(new Position(0,0), Color.Black));

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace Chess.Classes
 {
@@ -21,7 +22,7 @@ namespace Chess.Classes
             try
             {
                 //Pass the file path and file name to the StreamReader constructor
-                StreamReader sr = new StreamReader(_file);
+                StreamReader sr = new StreamReader(@"../../../Logs/" + _file);
                 //Read the first line of text
                 line = sr.ReadLine();
                 //Continue to read until you reach end of file
@@ -49,9 +50,11 @@ namespace Chess.Classes
             try
             {
                 //Pass the filepath and filename to the StreamWriter Constructor
-                StreamWriter sw = new StreamWriter(_file);
+              /*  StreamWriter sw = new StreamWriter( @"Logs/" + _file);
 
-                sw.WriteLine(Setups.ConvertToString(node));
+                sw.WriteLine(Setups.ConvertToString(node));*/
+
+                File.WriteAllText(@"../../../Logs/" + _file, Setups.ConvertToString(node));
 
             }
             catch (Exception e)

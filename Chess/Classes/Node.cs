@@ -41,7 +41,7 @@ namespace Chess.Classes
         // For Pawn
         public bool IsMoveablePawn(Position position)
         {
-            if (Board[position.X,position.Y] == "0")
+            if (Board[position.Y,position.X] == "0")
             {
                 return true;
             }
@@ -53,7 +53,7 @@ namespace Chess.Classes
         {
             if(color == Color.Black)
             {
-                if (Regex.IsMatch(Board[position.X, position.Y], @"[a-z]"))
+                if (Regex.IsMatch(Board[position.Y, position.X], @"[a-z]"))
                 {
                     return true;
                 }
@@ -64,7 +64,7 @@ namespace Chess.Classes
             }
             else
             {
-                if (Regex.IsMatch(Board[position.X, position.Y], @"[A-Z]"))
+                if (Regex.IsMatch(Board[position.Y, position.X], @"[A-Z]"))
                 {
                     return true;
                 }
@@ -81,11 +81,11 @@ namespace Chess.Classes
 
             if (color == Color.Black)
             {
-                if (Board[position.X,position.Y] == "0")
+                if (Board[position.Y,position.X] == "0")
                 {
                     return State.Possible;
                 }
-                else if (Regex.IsMatch(Board[position.X, position.Y], @"[a-z]"))
+                else if (Regex.IsMatch(Board[position.Y, position.X], @"[a-z]"))
                 {
                     return State.Take;
                 }
@@ -96,11 +96,11 @@ namespace Chess.Classes
             }
             else
             {
-                if (Board[position.X, position.Y] == "0")
+                if (Board[position.Y, position.X] == "0")
                 {
                     return State.Possible;
                 }
-                else if (Regex.IsMatch(Board[position.X, position.Y], @"[A-Z]"))
+                else if (Regex.IsMatch(Board[position.Y, position.X], @"[A-Z]"))
                 {
                     return State.Take;
                 }
@@ -110,6 +110,22 @@ namespace Chess.Classes
                 }
             }
 
+        }
+
+        public string FENBoard()
+        {
+            string res = "";
+
+            for (int i = 0; i <= 7; i++)
+            {
+                for (int j = 0; j <= 7; j++)
+                {
+                    res += Board[i, j];
+                }
+                res += "/";
+            }
+
+            return res.Substring(0,res.Length - 1);
         }
 
     }

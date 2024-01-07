@@ -23,7 +23,7 @@ namespace Chess.Forms
             InitializeComponent();
             Buttons = new Button[8, 8];
             SetButtons();
-            Game = new Game(Buttons);
+            Game = new Game(Buttons, "test.txt");
         }
 
         public void SetButtons()
@@ -104,7 +104,9 @@ namespace Chess.Forms
 
         public void BtnClick(int x,int y)
         {
-            Piece piece = Game.Pieces.FirstOrDefault(p => p.Position.X == y && p.Position.Y == x);
+            Setups.SetDefaultColor(Buttons);
+
+            Piece piece = Game.Pieces.FirstOrDefault(p => p.Position.X == x && p.Position.Y == y);
 
             if(piece != null)
             {
@@ -119,322 +121,322 @@ namespace Chess.Forms
 
         private void btn00_Click(object sender, EventArgs e)
         {
-
+            BtnClick(0, 0);
         }
 
         private void btn01_Click(object sender, EventArgs e)
         {
-
+            BtnClick(1, 0);
         }
 
         private void btn02_Click(object sender, EventArgs e)
         {
-
+            BtnClick(2, 0);
         }
 
         private void btn03_Click(object sender, EventArgs e)
         {
-
+            BtnClick(3, 0);
         }
 
         private void btn04_Click(object sender, EventArgs e)
         {
-
+            BtnClick(4, 0);
         }
 
         private void btn05_Click(object sender, EventArgs e)
         {
-
+            BtnClick(5, 0);
         }
 
         private void btn06_Click(object sender, EventArgs e)
         {
-
+            BtnClick(6, 0);
         }
 
         private void btn07_Click(object sender, EventArgs e)
         {
-
+            BtnClick(7, 0);
         }
 
         private void btn10_Click(object sender, EventArgs e)
         {
-
+            BtnClick(0, 1);
         }
 
         private void btn11_Click(object sender, EventArgs e)
         {
-
+            BtnClick(1, 1);
         }
 
         private void btn12_Click(object sender, EventArgs e)
         {
-
+            BtnClick(2, 1);
         }
 
         private void btn13_Click(object sender, EventArgs e)
         {
-
+            BtnClick(3, 1);
         }
 
         private void btn14_Click(object sender, EventArgs e)
         {
-
+            BtnClick(4, 1);
         }
 
         private void btn15_Click(object sender, EventArgs e)
         {
-
+            BtnClick(5, 1);
         }
 
         private void btn16_Click(object sender, EventArgs e)
         {
-
+            BtnClick(6, 1);
         }
 
         private void btn17_Click(object sender, EventArgs e)
         {
-
+            BtnClick(7, 1);
         }
 
         private void btn20_Click(object sender, EventArgs e)
         {
-
+            BtnClick(0, 2);
         }
 
         private void btn21_Click(object sender, EventArgs e)
         {
-
+            BtnClick(1, 2);
         }
 
         private void btn22_Click(object sender, EventArgs e)
         {
-
+            BtnClick(2, 2);
         }
 
         private void btn23_Click(object sender, EventArgs e)
         {
-
+            BtnClick(3, 2);
         }
 
         private void btn24_Click(object sender, EventArgs e)
         {
-
+            BtnClick(4, 2);
         }
 
         private void btn25_Click(object sender, EventArgs e)
         {
-
+            BtnClick(5, 2);
         }
 
         private void btn26_Click(object sender, EventArgs e)
         {
-
+            BtnClick(6, 2);
         }
 
         private void btn27_Click(object sender, EventArgs e)
         {
-
+            BtnClick(7, 2);
         }
 
         private void btn30_Click(object sender, EventArgs e)
         {
-
+            BtnClick(0, 3);
         }
 
         private void btn31_Click(object sender, EventArgs e)
         {
-
+            BtnClick(1, 3);
         }
 
         private void btn32_Click(object sender, EventArgs e)
         {
-
+            BtnClick(2, 3);
         }
 
         private void btn33_Click(object sender, EventArgs e)
         {
-
+            BtnClick(3, 3);
         }
 
         private void btn34_Click(object sender, EventArgs e)
         {
-
+            BtnClick(4, 3);
         }
 
         private void btn35_Click(object sender, EventArgs e)
         {
-
+            BtnClick(5, 3);
         }
 
         private void btn36_Click(object sender, EventArgs e)
         {
-
+            BtnClick(6, 3);
         }
 
         private void btn37_Click(object sender, EventArgs e)
         {
-
+            BtnClick(7, 3);
         }
 
         private void btn40_Click(object sender, EventArgs e)
         {
-
+            BtnClick(0, 4);
         }
 
         private void btn41_Click(object sender, EventArgs e)
         {
-
+            BtnClick(1, 4);
         }
 
         private void btn42_Click(object sender, EventArgs e)
         {
-
+            BtnClick(2, 4);
         }
 
         private void btn43_Click(object sender, EventArgs e)
         {
-
+            BtnClick(3, 4);
         }
 
         private void btn44_Click(object sender, EventArgs e)
         {
-
+            BtnClick(4, 4);
         }
 
         private void btn45_Click(object sender, EventArgs e)
         {
-
+            BtnClick(5, 4);
         }
 
         private void btn46_Click(object sender, EventArgs e)
         {
-
+            BtnClick(6, 4);
         }
 
         private void btn47_Click(object sender, EventArgs e)
         {
-
+            BtnClick(7, 4);
         }
 
         private void btn50_Click(object sender, EventArgs e)
         {
-
+            BtnClick(0, 5);
         }
 
         private void btn51_Click(object sender, EventArgs e)
         {
-
+            BtnClick(1, 5);
         }
 
         private void btn52_Click(object sender, EventArgs e)
         {
-
+            BtnClick(2, 5);
         }
 
         private void btn53_Click(object sender, EventArgs e)
         {
-
+            BtnClick(3, 5);
         }
 
         private void btn54_Click(object sender, EventArgs e)
         {
-
+            BtnClick(4, 5);
         }
 
         private void btn55_Click(object sender, EventArgs e)
         {
-
+            BtnClick(5, 5);
         }
 
         private void btn56_Click(object sender, EventArgs e)
         {
-
+            BtnClick(6, 5);
         }
 
         private void btn57_Click(object sender, EventArgs e)
         {
-
+            BtnClick(7, 5);
         }
 
         private void btn60_Click(object sender, EventArgs e)
         {
-
+            BtnClick(0, 6);
         }
 
         private void btn61_Click(object sender, EventArgs e)
         {
-
+            BtnClick(1, 6);
         }
 
         private void btn62_Click(object sender, EventArgs e)
         {
-
+            BtnClick(2, 6);
         }
 
         private void btn63_Click(object sender, EventArgs e)
         {
-
+            BtnClick(3, 6);
         }
 
         private void btn64_Click(object sender, EventArgs e)
         {
-            BtnClick(6, 4);
+            BtnClick(4, 6);
         }
 
         private void btn65_Click(object sender, EventArgs e)
         {
-
+            BtnClick(5, 6);
         }
 
         private void btn66_Click(object sender, EventArgs e)
         {
-
+            BtnClick(6, 6);
         }
 
         private void btn67_Click(object sender, EventArgs e)
         {
-
+            BtnClick(7, 6);
         }
 
         private void btn70_Click(object sender, EventArgs e)
         {
-
+            BtnClick(0, 7);
         }
 
         private void btn71_Click(object sender, EventArgs e)
         {
-
+            BtnClick(1, 7);
         }
 
         private void btn72_Click(object sender, EventArgs e)
         {
-
+            BtnClick(2, 7);
         }
 
         private void btn73_Click(object sender, EventArgs e)
         {
-
+            BtnClick(3, 7);
         }
 
         private void btn74_Click(object sender, EventArgs e)
         {
-
+            BtnClick(4, 7);
         }
 
         private void btn75_Click(object sender, EventArgs e)
         {
-
+            BtnClick(5, 7);
         }
 
         private void btn76_Click(object sender, EventArgs e)
         {
-            BtnClick(7, 6);
+            BtnClick(6, 7);
         }
 
         private void btn77_Click(object sender, EventArgs e)
         {
-
+            BtnClick(7, 7);
         }
     }
 }

@@ -19,16 +19,27 @@ namespace Chess.Classes.Pieces
 
             if(Color == Color.Black)
             {
-                Position position = new Position(Position.X, Position.Y + 1);
-                if (node.IsMoveablePawn(position)){
-                    possibleMoves.Add(position);
+                Position position;
 
-                    position = new Position(Position.X, Position.Y + 2);
-                    if (Position.Y == 1 && node.IsMoveablePawn(position))
+                try
+                {
+                    position = new Position(Position.X, Position.Y + 1);
+                    if (node.IsMoveablePawn(position))
                     {
                         possibleMoves.Add(position);
+
+                        position = new Position(Position.X, Position.Y + 2);
+                        if (Position.Y == 1 && node.IsMoveablePawn(position))
+                        {
+                            possibleMoves.Add(position);
+                        }
                     }
                 }
+                catch
+                {
+
+                }
+                
 
                 try
                 {
@@ -61,30 +72,54 @@ namespace Chess.Classes.Pieces
             }
             else
             {
-                Position position = new Position(Position.X, Position.Y - 1);
-                if (node.IsMoveablePawn(position))
-                {
-                    possibleMoves.Add(position);
+                Position position;
 
-                    position = new Position(Position.X, Position.Y - 2);
-                    if (Position.Y == 6 && node.IsMoveablePawn(position))
+                try
+                {
+                    position = new Position(Position.X, Position.Y - 1);
+                    if (node.IsMoveablePawn(position))
+                    {
+                        possibleMoves.Add(position);
+
+                        position = new Position(Position.X, Position.Y - 2);
+                        if (Position.Y == 6 && node.IsMoveablePawn(position))
+                        {
+                            possibleMoves.Add(position);
+                        }
+                    }
+                }
+                catch
+                {
+
+                }
+
+
+                try
+                {
+                    position = new Position(Position.X + 1, Position.Y - 1);
+
+                    if (node.IsMoveablePawn(position, Color.Black))
                     {
                         possibleMoves.Add(position);
                     }
                 }
-
-                position = new Position(Position.X + 1, Position.Y - 1);
-
-                if (node.IsMoveablePawn(position, Color.White))
+                catch
                 {
-                    possibleMoves.Add(position);
+
                 }
 
-                position = new Position(Position.X - 1, Position.Y - 1);
-
-                if (node.IsMoveablePawn(position, Color.White))
+                try
                 {
-                    possibleMoves.Add(position);
+                    position = new Position(Position.X - 1, Position.Y - 1);
+
+                    if (node.IsMoveablePawn(position, Color.Black))
+                    {
+                        possibleMoves.Add(position);
+                    }
+                }
+                catch
+                {
+
                 }
             }
 

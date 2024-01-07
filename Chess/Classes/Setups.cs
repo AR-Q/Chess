@@ -27,9 +27,67 @@ namespace Chess.Classes
             return node;
         }
 
+        public static void SetDefaultColor(Button[,] buttons)
+        {
+            for (int i = 0; i <= 7; i++)
+            {
+                for (int j = 0; j <= 7; j++)
+                {
+                    if((i + j) % 2 == 0)
+                    {
+                        buttons[i, j].BackColor = System.Drawing.Color.White;
+                    }
+                    else
+                    {
+
+                        buttons[i, j].BackColor = System.Drawing.SystemColors.ControlDarkDark;
+                    }
+                }
+            }
+        }
+
         public static string ConvertToString(Node node)
         {
             string res = "";
+
+            if(node.Move == Move.Start)
+            {
+                res = "#";
+            }
+            else if (node.Move == Move.Move)
+            {
+                res = "*";
+            }
+            else if (node.Move == Move.Undo)
+            {
+                res = "-";
+            }
+            else 
+            {
+                res = "+";
+            }
+            res += "|";
+
+            res += node.FENBoard() + "|";
+
+            if(node.Turn == Color.White)
+            {
+                res += "w";
+            }
+            else
+            {
+                res += "b";
+            }
+
+            res += "|";
+
+            res += node.Castle + "|";
+
+            res += node.EnPassant + "|";
+
+            res += Convert.ToString(node.Draw) + "|";
+
+            res += Convert.ToString(node.Total);
 
             return res;
         }
