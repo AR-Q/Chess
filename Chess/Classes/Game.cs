@@ -187,5 +187,49 @@ namespace Chess.Classes
 
             return board;
         }
+
+        public bool isChecked()
+        {
+            if(GetTurn() == Color.White)
+            {
+                List<Position> positions = new List<Position>();
+
+                foreach (var piece in Pieces.Where(p => p.Color == Color.Black))
+                {
+                    positions.AddRange(piece.GetPossibleMoves(ChessTree.GetCurrentNode()));
+                }
+
+                Piece king = Pieces.FirstOrDefault(x => x.PieceType() == "king" && x.Color == Color.White);
+
+                if(positions.Any(p => p.X == king.Position.X && p.Y == king.Position.Y))
+                {
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
+            }
+            else
+            {
+                List<Position> positions = new List<Position>();
+
+                foreach (var piece in Pieces.Where(p => p.Color == Color.White))
+                {
+                    positions.AddRange(piece.GetPossibleMoves(ChessTree.GetCurrentNode()));
+                }
+
+                Piece king = Pieces.FirstOrDefault(x => x.PieceType() == "king" && x.Color == Color.Black);
+
+                if (positions.Any(p => p.X == king.Position.X && p.Y == king.Position.Y))
+                {
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
+            }
+        }
     }
 }

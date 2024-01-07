@@ -8,9 +8,11 @@ using System.Data;
 using System.Drawing;
 using System.Linq;
 using System.Reflection;
+using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Xml.Linq;
 
 namespace Chess.Forms
 {
@@ -109,6 +111,7 @@ namespace Chess.Forms
         public void BtnClick(int x,int y)
         {
             Setups.SetDefaultColor(Buttons);
+            Check();
 
             Piece piece = Game.Pieces.FirstOrDefault(p => p.Position.X == x && p.Position.Y == y);
 
@@ -255,16 +258,27 @@ namespace Chess.Forms
                     EnPassant = enPassant, 
                     Draw = 0, // Function
                     Total = Game.ChessTree.GetCurrentNode().Total + 1,
-                    Check = false, // Function
+                    Check = Game.isChecked(), // Function
                 };
 
                 Game.ChessTree.AddNode(node);
 
                 Setups.SetupBoard(Game.Pieces, Buttons);
+                Check();
+                
             }
 
             selected = null;
             possiblePositions = null;
+        }
+
+        public void Check()
+        {
+            if (Game.ChessTree.GetCurrentNode().Check)
+            {
+                Position position = Game.Pieces.FirstOrDefault(x => x.Color == Game.ChessTree.GetCurrentNode().Turn && x.PieceType() == "king").Position;
+                Buttons[position.Y, position.X].BackColor = System.Drawing.Color.Red;
+            }
         }
 
         private void btn00_Click(object sender, EventArgs e)
