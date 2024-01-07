@@ -45,9 +45,20 @@ namespace Chess.Classes.Pieces
                 {
                     position = new Position(Position.X + 1, Position.Y + 1);
 
-                    if (node.IsMoveablePawn(position, Color.Black))
+                    if (node.IsMoveablePawn(position, Color.White))
                     {
                         possibleMoves.Add(position);
+                    }
+
+                    if (node.EnPassant != "-")
+                    {
+                        int x = node.EnPassant[0] - 48;
+                        int y = node.EnPassant[1] - 48;
+
+                        if (x == position.X && y == position.Y)
+                        {
+                            possibleMoves.Add(position);
+                        }
                     }
                 }
                 catch
@@ -59,15 +70,28 @@ namespace Chess.Classes.Pieces
                 {
                     position = new Position(Position.X - 1, Position.Y + 1);
 
-                    if (node.IsMoveablePawn(position, Color.Black))
+                    if (node.IsMoveablePawn(position, Color.White))
                     {
                         possibleMoves.Add(position);
+                    }
+
+                    if (node.EnPassant != "-")
+                    {
+                        int x = node.EnPassant[0] - 48;
+                        int y = node.EnPassant[1] - 48;
+
+                        if (x == position.X && y == position.Y)
+                        {
+                            possibleMoves.Add(position);
+                        }
                     }
                 }
                 catch
                 {
 
                 }
+
+                
 
             }
             else
@@ -102,6 +126,17 @@ namespace Chess.Classes.Pieces
                     {
                         possibleMoves.Add(position);
                     }
+
+                    if (node.EnPassant != "-")
+                    {
+                        int x = node.EnPassant[0] - 48;
+                        int y = node.EnPassant[1] - 48;
+
+                        if (x == position.X && y == position.Y)
+                        {
+                            possibleMoves.Add(position);
+                        }
+                    }
                 }
                 catch
                 {
@@ -115,6 +150,17 @@ namespace Chess.Classes.Pieces
                     if (node.IsMoveablePawn(position, Color.Black))
                     {
                         possibleMoves.Add(position);
+                    }
+
+                    if (node.EnPassant != "-")
+                    {
+                        int x = node.EnPassant[0] - 48;
+                        int y = node.EnPassant[1] - 48;
+
+                        if (x == position.X && y == position.Y)
+                        {
+                            possibleMoves.Add(position);
+                        }
                     }
                 }
                 catch

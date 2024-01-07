@@ -10,6 +10,7 @@ namespace Chess.Classes
     public class Game
     {
         public List<Piece> Pieces { get; set; }
+        public List<Piece> TakenPiece { get; set; }
         public ChessTree ChessTree { get; set; }
         public FileManager fileManager;
 
@@ -17,6 +18,7 @@ namespace Chess.Classes
         {
             
             Pieces = new List<Piece>();
+            TakenPiece = new List<Piece>();
             ChessTree = new ChessTree(filePath);
             
 

@@ -114,15 +114,20 @@ namespace Chess.Forms
 
             if(possiblePositions == null)
             {
+
                 if (piece != null)
                 {
-                    List<Position> positions = piece.GetPossibleMoves(Game.ChessTree.GetCurrentNode());
-                    possiblePositions = positions;
-                    selected = piece;
 
-                    foreach (var position in positions)
+                    if(piece.Color == Game.ChessTree.GetCurrentNode().Turn)
                     {
-                        Buttons[position.Y, position.X].BackColor = System.Drawing.Color.SkyBlue;
+                        List<Position> positions = piece.GetPossibleMoves(Game.ChessTree.GetCurrentNode());
+                        possiblePositions = positions;
+                        selected = piece;
+
+                        foreach (var position in positions)
+                        {
+                            Buttons[position.Y, position.X].BackColor = System.Drawing.Color.SkyBlue;
+                        }
                     }
                 }
             }
@@ -152,17 +157,100 @@ namespace Chess.Forms
                 }
             }
 
-            if(possiblePositions.Any(p => p.X == x && p.Y == y))
+            string castle = Game.ChessTree.GetCurrentNode().Castle;
+
+            if(type=="king" && selected.Color == Classes.Color.White)
             {
+                if (castle.Contains("KQ"))
+                {
+                    castle = castle.Replace("KQ", "");
+                }
+            }
+            else if (type == "king" && selected.Color == Classes.Color.Black)
+            {
+                if (castle.Contains("kq"))
+                {
+                    castle = castle.Replace("kq", "");
+                }
+            }
+            else if(type == "rook" && selected.Color == Classes.Color.White)
+            {
+                if(selected.Position.X == 7 && selected.Position.Y == 7)
+                {
+                    if (castle.Contains("K"))
+                    {
+                        castle = castle.Replace("K", "");
+                    }
+                }
+                else if (selected.Position.X == 0 && selected.Position.Y == 7)
+                {
+                    if (castle.Contains("Q"))
+                    {
+                        castle = castle.Replace("Q", "");
+                    }
+                }
+            }
+            else if (type == "rook" && selected.Color == Classes.Color.Black)
+            {
+                if (selected.Position.X == 7 && selected.Position.Y == 0)
+                {
+                    if (castle.Contains("k"))
+                    {
+                        castle = castle.Replace("k", "");
+                    }
+                }
+                else if (selected.Position.X == 0 && selected.Position.Y == 0)
+                {
+                    if (castle.Contains("q"))
+                    {
+                        castle = castle.Replace("q", "");
+                    }
+                }
+            }
+
+            if (possiblePositions.Any(p => p.X == x && p.Y == y))
+            {
+                
+                if(Game.Pieces.Any(p => p.Position.X == x && p.Position.Y == y))
+                {
+                    Piece piece = Game.Pieces.FirstOrDefault(p => p.Position.X == x && p.Position.Y == y);
+                    Game.Pieces.Remove(piece);
+                    Game.TakenPiece.Add(piece);
+                }
+                else if(type == "pawn" && Game.ChessTree.GetCurrentNode().EnPassant != "-")
+                {
+                    int ex = Game.ChessTree.GetCurrentNode().EnPassant[0] - 48;
+                    int ey = Game.ChessTree.GetCurrentNode().EnPassant[1] - 48;
+
+                    if(x == ex && y == ey && Game.ChessTree.GetCurrentNode().Turn == Classes.Color.White)
+                    {
+                        if (Game.Pieces.Any(p => p.Position.X == x && p.Position.Y == y + 1))
+                        {
+                            Piece piece = Game.Pieces.FirstOrDefault(p => p.Position.X == x && p.Position.Y == y + 1);
+                            Game.Pieces.Remove(piece);
+                            Game.TakenPiece.Add(piece);
+                        }
+                    }
+                    else if (x == ex && y == ey && Game.ChessTree.GetCurrentNode().Turn == Classes.Color.Black)
+                    {
+                        if (Game.Pieces.Any(p => p.Position.X == x && p.Position.Y == y - 1))
+                        {
+                            Piece piece = Game.Pieces.FirstOrDefault(p => p.Position.X == x && p.Position.Y == y - 1);
+                            Game.Pieces.Remove(piece);
+                            Game.TakenPiece.Add(piece);
+                        }
+                    }
+                }
+                
+
                 selected.Position.X = x;
                 selected.Position.Y = y;
 
                 Node node = new Node()
                 {
-                    //
                     Move = Classes.Move.Move,
                     Board = Game.GetFENBoard(), // Function
-                    Castle = "", // Function
+                    Castle = castle, // Function
                     Turn = Game.GetTurn(), 
                     EnPassant = enPassant, 
                     Draw = 0, // Function
