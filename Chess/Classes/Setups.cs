@@ -13,6 +13,14 @@ namespace Chess.Classes
         {
             /*Buttons[0, 0].BackgroundImage = global::Chess.Properties.Resources.rook_b;*/
 
+            for (int i = 0; i <= 7; i++)
+            {
+                for (int j = 0; j <= 7; j++)
+                {
+                    Buttons[i, j].Image = null;
+                }
+            }
+
             foreach (var piece in board)
             {
                 SetPiece(piece, Buttons[piece.Position.Y, piece.Position.X]);

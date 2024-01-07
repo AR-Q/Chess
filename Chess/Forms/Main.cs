@@ -2,10 +2,12 @@
 using Chess.Classes.Pieces;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -17,6 +19,8 @@ namespace Chess.Forms
 
         Game Game;
         public Button[,] Buttons;
+        List<Position> possiblePositions;
+        Piece selected;
 
         public Main()
         {
@@ -108,15 +112,71 @@ namespace Chess.Forms
 
             Piece piece = Game.Pieces.FirstOrDefault(p => p.Position.X == x && p.Position.Y == y);
 
-            if(piece != null)
+            if(possiblePositions == null)
             {
-                List<Position> positions = piece.GetPossibleMoves(Game.ChessTree.GetCurrentNode());
-
-                foreach (var position in positions)
+                if (piece != null)
                 {
-                    Buttons[position.Y, position.X].BackColor = System.Drawing.Color.SkyBlue;
+                    List<Position> positions = piece.GetPossibleMoves(Game.ChessTree.GetCurrentNode());
+                    possiblePositions = positions;
+                    selected = piece;
+
+                    foreach (var position in positions)
+                    {
+                        Buttons[position.Y, position.X].BackColor = System.Drawing.Color.SkyBlue;
+                    }
                 }
             }
+            else
+            {
+                MovePieces(x,y);
+            }
+            
+        }
+
+        public void MovePieces(int x, int y)
+        {
+            string enPassant = "-";
+            Position last = selected.Position;
+            string type = selected.PieceType();
+
+            if(type == "pawn")
+            {
+                if(last.Y == 6 && y == 4)
+                {
+                    enPassant = Convert.ToString(x) + Convert.ToString(5);
+                }
+                else if (last.Y == 1 && y == 3)
+                {
+
+                    enPassant = Convert.ToString(x) + Convert.ToString(2);
+                }
+            }
+
+            if(possiblePositions.Any(p => p.X == x && p.Y == y))
+            {
+                selected.Position.X = x;
+                selected.Position.Y = y;
+
+                Node node = new Node()
+                {
+                    //
+                    Move = Classes.Move.Move,
+                    Board = Game.GetFENBoard(), // Function
+                    Castle = "", // Function
+                    Turn = Game.GetTurn(), 
+                    EnPassant = enPassant, 
+                    Draw = 0, // Function
+                    Total = Game.ChessTree.GetCurrentNode().Total + 1,
+                    Check = false, // Function
+                };
+
+                Game.ChessTree.AddNode(node);
+
+                Setups.SetupBoard(Game.Pieces, Buttons);
+            }
+
+            selected = null;
+            possiblePositions = null;
         }
 
         private void btn00_Click(object sender, EventArgs e)

@@ -17,8 +17,8 @@ namespace Chess.Classes
         {
             
             Pieces = new List<Piece>();
-            ChessTree = new ChessTree();
-            fileManager = new FileManager(filePath);
+            ChessTree = new ChessTree(filePath);
+            
 
             Node node = new Node
             {
@@ -42,7 +42,6 @@ namespace Chess.Classes
             };
 
             ChessTree.AddNode(node);
-            fileManager.WriteFile(node);
 
 
             Pieces.Add(new Rook(new Position(0,0), Color.Black));
@@ -82,6 +81,109 @@ namespace Chess.Classes
             Pieces.Add(new Pawn(new Position(7, 6), Color.White));
 
             Setups.SetupBoard(Pieces , Buttons);
+        }
+
+        public Color GetTurn()
+        {
+            if(ChessTree.GetCurrentNode().Turn == Color.White)
+            {
+                return Color.Black;
+            }
+            else
+            {
+                return Color.White;
+            }
+        }
+
+
+        public string[,] GetFENBoard()
+        {
+            string[,] board = new string[8, 8];
+
+            for (int i = 0; i <= 7; i++)
+            {
+                for (int j = 0; j <= 7; j++)
+                {
+                    board[i, j] = "0";
+                }
+            }
+
+            foreach (var piece in Pieces)
+            {
+                switch (piece.PieceType())
+                {
+                    case "pawn":
+                        if (piece.Color == Color.White)
+                        {
+                            board[piece.Position.Y, piece.Position.X] = "P";
+                        }
+                        else
+                        {
+                            board[piece.Position.Y, piece.Position.X] = "p";
+                        }
+                        break;
+
+                    case "rook":
+                        if (piece.Color == Color.White)
+                        {
+                            board[piece.Position.Y, piece.Position.X] = "R";
+                        }
+                        else
+                        {
+                            board[piece.Position.Y, piece.Position.X] = "r";
+                        }
+                        break;
+
+                    case "knight":
+                        if (piece.Color == Color.White)
+                        {
+                            board[piece.Position.Y, piece.Position.X] = "N";
+                        }
+                        else
+                        {
+                            board[piece.Position.Y, piece.Position.X] = "n";
+                        }
+                        break;
+
+                    case "bishop":
+                        if (piece.Color == Color.White)
+                        {
+                            board[piece.Position.Y, piece.Position.X] = "B";
+                        }
+                        else
+                        {
+                            board[piece.Position.Y, piece.Position.X] = "b";
+                        }
+                        break;
+
+                    case "king":
+                        if (piece.Color == Color.White)
+                        {
+                            board[piece.Position.Y, piece.Position.X] = "K";
+                        }
+                        else
+                        {
+                            board[piece.Position.Y, piece.Position.X] = "k";
+                        }
+                        break;
+
+                    case "queen":
+                        if (piece.Color == Color.White)
+                        {
+                            board[piece.Position.Y, piece.Position.X] = "Q";
+                        }
+                        else
+                        {
+                            board[piece.Position.Y, piece.Position.X] = "q";
+                        }
+                        break;
+
+                    default:
+                        throw new Exception("Error : Unknoun Piece");
+                }
+            }
+
+            return board;
         }
     }
 }

@@ -12,12 +12,17 @@ namespace Chess.Classes
         private Node _root;
 
         private Node _current;
+        private string path;
 
+        public FileManager fileManager;
 
-        public ChessTree()
+        public ChessTree(string path)
         {
             _root = null;
             _current = null;
+            this.path = path;
+
+            fileManager = new FileManager(path);
         }
 
 
@@ -27,6 +32,7 @@ namespace Chess.Classes
             {
                 _current = node;
                 _root = node;
+                fileManager.WriteFile(node);
                 return;
             }
 
@@ -34,6 +40,7 @@ namespace Chess.Classes
             node.Father = _current;
 
             _current = node;
+            fileManager.WriteFile(node);
 
             //TODO Add To Log
         }

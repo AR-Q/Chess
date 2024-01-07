@@ -50,11 +50,12 @@ namespace Chess.Classes
             try
             {
                 //Pass the filepath and filename to the StreamWriter Constructor
-              /*  StreamWriter sw = new StreamWriter( @"Logs/" + _file);
+                /*  StreamWriter sw = new StreamWriter( @"Logs/" + _file);
 
-                sw.WriteLine(Setups.ConvertToString(node));*/
+                  sw.WriteLine(Setups.ConvertToString(node));*/
 
-                File.WriteAllText(@"../../../Logs/" + _file, Setups.ConvertToString(node));
+                // Adding the text to the madrid.txt file
+                File.AppendAllText(@"../../../Logs/" + _file,Setups.ConvertToString(node) + Environment.NewLine);
 
             }
             catch (Exception e)
