@@ -211,31 +211,36 @@ namespace Chess.Forms
 
                     enPassant = Convert.ToString(x) + Convert.ToString(2);
                 }
-
-                if (y == 0)
-                {
-                    Position position = new Position(x, y);
-                    Promote promote = new Promote(this, Classes.Color.White, position,x,y, castle);
-                    promote.Show();
-                    return;
-                }
-                else if (y == 7)
-                {
-                    Position position = new Position(x, y);
-                    Promote promote = new Promote(this, Classes.Color.Black, position,x,y, castle);
-                    promote.Show();
-                    return;                    
-                }
             }
 
             if (possiblePositions.Any(p => p.X == x && p.Y == y))
             {
                 
+
                 if(Game.Pieces.Any(p => p.Position.X == x && p.Position.Y == y))
                 {
+                    
                     Piece piece = Game.Pieces.FirstOrDefault(p => p.Position.X == x && p.Position.Y == y);
                     Game.Pieces.Remove(piece);
                     Game.TakenPiece.Add(piece);
+                    if (type == "pawn")
+                    {
+
+                        if (y == 0)
+                        {
+                            Position position = new Position(x, y);
+                            Promote promote = new Promote(this, Classes.Color.White, position, x, y, castle);
+                            promote.Show();
+                            return;
+                        }
+                        else if (y == 7)
+                        {
+                            Position position = new Position(x, y);
+                            Promote promote = new Promote(this, Classes.Color.Black, position, x, y, castle);
+                            promote.Show();
+                            return;
+                        }
+                    }
                 }
                 else if(type == "pawn" && Game.ChessTree.GetCurrentNode().EnPassant != "-")
                 {
@@ -261,7 +266,26 @@ namespace Chess.Forms
                         }
                     }
                 }
-                
+
+                if (type == "pawn")
+                {
+
+                    if (y == 0)
+                    {
+                        Position position = new Position(x, y);
+                        Promote promote = new Promote(this, Classes.Color.White, position, x, y, castle);
+                        promote.Show();
+                        return;
+                    }
+                    else if (y == 7)
+                    {
+                        Position position = new Position(x, y);
+                        Promote promote = new Promote(this, Classes.Color.Black, position, x, y, castle);
+                        promote.Show();
+                        return;
+                    }
+                }
+
 
                 selected.Position.X = x;
                 selected.Position.Y = y;
