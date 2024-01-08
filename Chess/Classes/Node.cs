@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
+using System.Xml.Linq;
 
 namespace Chess.Classes
 {
@@ -13,7 +14,6 @@ namespace Chess.Classes
 
         public Node Father { get; set; }
         public List<Node> Children { get; set; }
-
 
 
 
@@ -351,6 +351,27 @@ namespace Chess.Classes
             }
 
             return piece;
+        }
+
+        public bool IsUnderCheck(List<Position> positions, Color color)
+        {
+            List<Piece> pieces = GetPieces(Board);
+            List<Position> pos = new List<Position>();
+
+            foreach (var piece2 in pieces.Where(p => p.Color != color))
+            {
+                pos.AddRange(piece2.GetPossibleMoves(this, Board, false));
+            }
+
+            foreach (var item in positions)
+            {
+                if(pos.Any(p => p.X == item.X && p.Y == item.Y))
+                {
+                    return false;
+                }
+            }
+
+            return true;
         }
     }
 

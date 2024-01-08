@@ -286,6 +286,44 @@ namespace Chess.Forms
                     }
                 }
 
+                if(type == "king")
+                {
+                    if(selected.Color == Classes.Color.White)
+                    {
+                        if(last.X == 4 && last.Y == 7 && x == 6 && y == 7)
+                        {
+                            Piece rook = Game.Pieces.FirstOrDefault(p => p.Position.X == 7 && p.Position.Y == 7);
+
+                            rook.Position.X = 5;
+                            rook.Position.Y = 7;
+                        }
+                        else if (last.X == 4 && last.Y == 7 && x == 2 && y == 7)
+                        {
+                            Piece rook = Game.Pieces.FirstOrDefault(p => p.Position.X == 0 && p.Position.Y == 7);
+
+                            rook.Position.X = 3;
+                            rook.Position.Y = 7;
+                        }
+                    }
+                    else
+                    {
+                        if(last.X == 4 && last.Y == 0 && x == 6 && y == 0)
+                        {
+                            Piece rook = Game.Pieces.FirstOrDefault(p => p.Position.X == 7 && p.Position.Y == 0);
+
+                            rook.Position.X = 5;
+                            rook.Position.Y = 0;
+                        }
+                        else if (last.X == 4 && last.Y == 0 && x == 2 && y == 0)
+                        {
+                            Piece rook = Game.Pieces.FirstOrDefault(p => p.Position.X == 0 && p.Position.Y == 0);
+
+                            rook.Position.X = 3;
+                            rook.Position.Y = 0;
+                        }
+                    }
+                }
+
 
                 selected.Position.X = x;
                 selected.Position.Y = y;
@@ -293,13 +331,13 @@ namespace Chess.Forms
                 Node node = new Node()
                 {
                     Move = Classes.Move.Move,
-                    Board = Game.GetFENBoard(), // Function
-                    Castle = castle, // Function
+                    Board = Game.GetFENBoard(),
+                    Castle = castle,
                     Turn = Game.GetTurn(), 
                     EnPassant = enPassant, 
                     Draw = 0, // Function
                     Total = Game.ChessTree.GetCurrentNode().Total + 1,
-                    Check = Game.isChecked(), // Function
+                    Check = Game.isChecked(),
                 };
 
                 Game.ChessTree.AddNode(node);
@@ -330,18 +368,19 @@ namespace Chess.Forms
                 Node node = new Node()
                 {
                     Move = Classes.Move.Move,
-                    Board = Game.GetFENBoard(), // Function
-                    Castle = caslte, // Function
+                    Board = Game.GetFENBoard(),
+                    Castle = caslte, 
                     Turn = Game.GetTurn(),
                     EnPassant = "-",
                     Draw = 0, // Function
                     Total = Game.ChessTree.GetCurrentNode().Total + 1,
-                    Check = Game.isChecked(), // Function
+                    Check = Game.isChecked(), 
                 };
 
                 Game.ChessTree.AddNode(node);
 
                 Setups.SetupBoard(Game.Pieces, Buttons);
+                Game.IsMate();
                 Check();
 
             }
