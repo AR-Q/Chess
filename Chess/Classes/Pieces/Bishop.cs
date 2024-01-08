@@ -13,7 +13,7 @@ namespace Chess.Classes.Pieces
 
         }
 
-        public override List<Position> GetPossibleMoves(Node node)
+        public override List<Position> GetPossibleMoves(Node node, string[,] board)
         {
             List<Position> possibleMoves = new List<Position>();
 
@@ -34,13 +34,13 @@ namespace Chess.Classes.Pieces
             while (x <= 7 && y <= 7)
             {
                 Position position = new Position(x, y);
-                if (node.IsMoveable(position, oposite) == State.Possible)
+                if (node.IsMoveable(position, oposite, board) == State.Possible)
                 {
                     possibleMoves.Add(position);
                     x++;
                     y++;
                 }
-                else if (node.IsMoveable(position, oposite) == State.Take)
+                else if (node.IsMoveable(position, oposite, board) == State.Take)
                 {
                     possibleMoves.Add(position);
                     break;
@@ -57,13 +57,13 @@ namespace Chess.Classes.Pieces
             while (x <= 7 && y >= 0)
             {
                 Position position = new Position(x, y);
-                if (node.IsMoveable(position, oposite) == State.Possible)
+                if (node.IsMoveable(position, oposite, board) == State.Possible)
                 {
                     possibleMoves.Add(position);
                     x++;
                     y--;
                 }
-                else if (node.IsMoveable(position, oposite) == State.Take)
+                else if (node.IsMoveable(position, oposite, board) == State.Take)
                 {
                     possibleMoves.Add(position);
                     break;
@@ -80,13 +80,13 @@ namespace Chess.Classes.Pieces
             while (x >= 0 && y <= 7)
             {
                 Position position = new Position(x, y);
-                if (node.IsMoveable(position, oposite) == State.Possible)
+                if (node.IsMoveable(position, oposite, board) == State.Possible)
                 {
                     possibleMoves.Add(position);
                     x--;
                     y++;
                 }
-                else if (node.IsMoveable(position, oposite) == State.Take)
+                else if (node.IsMoveable(position, oposite, board) == State.Take)
                 {
                     possibleMoves.Add(position);
                     break;
@@ -103,13 +103,13 @@ namespace Chess.Classes.Pieces
             while (x >= 0 && y >= 0)
             {
                 Position position = new Position(x, y);
-                if (node.IsMoveable(position, oposite) == State.Possible)
+                if (node.IsMoveable(position, oposite, board) == State.Possible)
                 {
                     possibleMoves.Add(position);
                     x--;
                     y--;
                 }
-                else if (node.IsMoveable(position, oposite) == State.Take)
+                else if (node.IsMoveable(position, oposite, board) == State.Take)
                 {
                     possibleMoves.Add(position);
                     break;
@@ -118,6 +118,20 @@ namespace Chess.Classes.Pieces
                 {
                     break;
                 }
+            }
+
+            if (possibleMoves.Count != 0 && node.Check)
+            {
+                string p;
+                if (Color == Color.Black)
+                {
+                    p = "b";
+                }
+                else
+                {
+                    p = "B";
+                }
+                possibleMoves = node.CheckMove(this, possibleMoves,p);
             }
 
             return possibleMoves;

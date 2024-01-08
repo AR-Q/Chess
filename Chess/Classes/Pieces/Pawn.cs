@@ -13,7 +13,7 @@ namespace Chess.Classes.Pieces
 
         }
 
-        public override List<Position> GetPossibleMoves(Node node)
+        public override List<Position> GetPossibleMoves(Node node, string[,] board)
         {
             List<Position> possibleMoves = new List<Position>();
 
@@ -24,12 +24,12 @@ namespace Chess.Classes.Pieces
                 try
                 {
                     position = new Position(Position.X, Position.Y + 1);
-                    if (node.IsMoveablePawn(position))
+                    if (node.IsMoveablePawn(position,board))
                     {
                         possibleMoves.Add(position);
 
                         position = new Position(Position.X, Position.Y + 2);
-                        if (Position.Y == 1 && node.IsMoveablePawn(position))
+                        if (Position.Y == 1 && node.IsMoveablePawn(position,board))
                         {
                             possibleMoves.Add(position);
                         }
@@ -45,7 +45,7 @@ namespace Chess.Classes.Pieces
                 {
                     position = new Position(Position.X + 1, Position.Y + 1);
 
-                    if (node.IsMoveablePawn(position, Color.White))
+                    if (node.IsMoveablePawn(position, Color.White, board))
                     {
                         possibleMoves.Add(position);
                     }
@@ -70,7 +70,7 @@ namespace Chess.Classes.Pieces
                 {
                     position = new Position(Position.X - 1, Position.Y + 1);
 
-                    if (node.IsMoveablePawn(position, Color.White))
+                    if (node.IsMoveablePawn(position, Color.White, board))
                     {
                         possibleMoves.Add(position);
                     }
@@ -101,12 +101,12 @@ namespace Chess.Classes.Pieces
                 try
                 {
                     position = new Position(Position.X, Position.Y - 1);
-                    if (node.IsMoveablePawn(position))
+                    if (node.IsMoveablePawn(position,board))
                     {
                         possibleMoves.Add(position);
 
                         position = new Position(Position.X, Position.Y - 2);
-                        if (Position.Y == 6 && node.IsMoveablePawn(position))
+                        if (Position.Y == 6 && node.IsMoveablePawn(position,board))
                         {
                             possibleMoves.Add(position);
                         }
@@ -122,7 +122,7 @@ namespace Chess.Classes.Pieces
                 {
                     position = new Position(Position.X + 1, Position.Y - 1);
 
-                    if (node.IsMoveablePawn(position, Color.Black))
+                    if (node.IsMoveablePawn(position, Color.Black,board))
                     {
                         possibleMoves.Add(position);
                     }
@@ -147,7 +147,7 @@ namespace Chess.Classes.Pieces
                 {
                     position = new Position(Position.X - 1, Position.Y - 1);
 
-                    if (node.IsMoveablePawn(position, Color.Black))
+                    if (node.IsMoveablePawn(position, Color.Black,board))
                     {
                         possibleMoves.Add(position);
                     }
@@ -167,6 +167,20 @@ namespace Chess.Classes.Pieces
                 {
 
                 }
+            }
+
+            if(possibleMoves.Count != 0 && node.Check)
+            {
+                string p;
+                if(Color == Color.Black)
+                {
+                    p = "p";
+                }
+                else
+                {
+                    p = "P";
+                }
+                possibleMoves = node.CheckMove(this, possibleMoves,p);
             }
 
             return possibleMoves;

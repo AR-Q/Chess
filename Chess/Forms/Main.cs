@@ -23,6 +23,7 @@ namespace Chess.Forms
         public Button[,] Buttons;
         List<Position> possiblePositions;
         Piece selected;
+        public Piece promotePiece;
 
         public Main()
         {
@@ -30,6 +31,7 @@ namespace Chess.Forms
             Buttons = new Button[8, 8];
             SetButtons();
             Game = new Game(Buttons, "test.txt");
+            promotePiece = null;
         }
 
         public void SetButtons()
@@ -123,7 +125,7 @@ namespace Chess.Forms
 
                     if(piece.Color == Game.ChessTree.GetCurrentNode().Turn)
                     {
-                        List<Position> positions = piece.GetPossibleMoves(Game.ChessTree.GetCurrentNode());
+                        List<Position> positions = piece.GetPossibleMoves(Game.ChessTree.GetCurrentNode(), Game.ChessTree.GetCurrentNode().Board);
                         possiblePositions = positions;
                         selected = piece;
 
@@ -146,19 +148,6 @@ namespace Chess.Forms
             string enPassant = "-";
             Position last = selected.Position;
             string type = selected.PieceType();
-
-            if(type == "pawn")
-            {
-                if(last.Y == 6 && y == 4)
-                {
-                    enPassant = Convert.ToString(x) + Convert.ToString(5);
-                }
-                else if (last.Y == 1 && y == 3)
-                {
-
-                    enPassant = Convert.ToString(x) + Convert.ToString(2);
-                }
-            }
 
             string castle = Game.ChessTree.GetCurrentNode().Castle;
 
@@ -208,6 +197,34 @@ namespace Chess.Forms
                     {
                         castle = castle.Replace("q", "");
                     }
+                }
+            }
+
+            if (type == "pawn")
+            {
+                if (last.Y == 6 && y == 4)
+                {
+                    enPassant = Convert.ToString(x) + Convert.ToString(5);
+                }
+                else if (last.Y == 1 && y == 3)
+                {
+
+                    enPassant = Convert.ToString(x) + Convert.ToString(2);
+                }
+
+                if (y == 0)
+                {
+                    Position position = new Position(x, y);
+                    Promote promote = new Promote(this, Classes.Color.White, position,x,y, castle);
+                    promote.Show();
+                    return;
+                }
+                else if (y == 7)
+                {
+                    Position position = new Position(x, y);
+                    Promote promote = new Promote(this, Classes.Color.Black, position,x,y, castle);
+                    promote.Show();
+                    return;                    
                 }
             }
 
@@ -265,7 +282,42 @@ namespace Chess.Forms
 
                 Setups.SetupBoard(Game.Pieces, Buttons);
                 Check();
-                
+
+            }
+
+            selected = null;
+            possiblePositions = null;
+        }
+
+
+        public void Promote(int x, int y, string caslte)
+        {
+            Game.Pieces.Remove(selected);
+            Game.Pieces.Add(promotePiece);
+            promotePiece = null;
+
+            if (possiblePositions.Any(p => p.X == x && p.Y == y))
+            {
+                selected.Position.X = x;
+                selected.Position.Y = y;
+
+                Node node = new Node()
+                {
+                    Move = Classes.Move.Move,
+                    Board = Game.GetFENBoard(), // Function
+                    Castle = caslte, // Function
+                    Turn = Game.GetTurn(),
+                    EnPassant = "-",
+                    Draw = 0, // Function
+                    Total = Game.ChessTree.GetCurrentNode().Total + 1,
+                    Check = Game.isChecked(), // Function
+                };
+
+                Game.ChessTree.AddNode(node);
+
+                Setups.SetupBoard(Game.Pieces, Buttons);
+                Check();
+
             }
 
             selected = null;

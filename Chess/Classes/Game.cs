@@ -196,7 +196,7 @@ namespace Chess.Classes
 
                 foreach (var piece in Pieces.Where(p => p.Color == Color.Black))
                 {
-                    positions.AddRange(piece.GetPossibleMoves(ChessTree.GetCurrentNode()));
+                    positions.AddRange(piece.GetPossibleMoves(ChessTree.GetCurrentNode(),ChessTree.GetCurrentNode().Board));
                 }
 
                 Piece king = Pieces.FirstOrDefault(x => x.PieceType() == "king" && x.Color == Color.White);
@@ -216,7 +216,7 @@ namespace Chess.Classes
 
                 foreach (var piece in Pieces.Where(p => p.Color == Color.White))
                 {
-                    positions.AddRange(piece.GetPossibleMoves(ChessTree.GetCurrentNode()));
+                    positions.AddRange(piece.GetPossibleMoves(ChessTree.GetCurrentNode(), ChessTree.GetCurrentNode().Board));
                 }
 
                 Piece king = Pieces.FirstOrDefault(x => x.PieceType() == "king" && x.Color == Color.Black);
