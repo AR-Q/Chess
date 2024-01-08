@@ -173,7 +173,7 @@ namespace Chess.Classes
 
                     foreach (var piece2 in pieces.Where(p => p.Color == Color.Black))
                     {
-                        positions.AddRange(piece2.GetPossibleMoves(node,tempBoard));
+                        positions.AddRange(piece2.GetPossibleMoves(node,tempBoard, false));
                     }
 
                     Piece king = pieces.FirstOrDefault(x => x.PieceType() == "king" && x.Color == Color.White);
@@ -192,7 +192,72 @@ namespace Chess.Classes
 
                     foreach (var piece2 in pieces.Where(p => p.Color == Color.White))
                     {
-                        positions.AddRange(piece2.GetPossibleMoves(node, tempBoard));
+                        positions.AddRange(piece2.GetPossibleMoves(node, tempBoard, false));
+                    }
+
+                    Piece king = pieces.FirstOrDefault(x => x.PieceType() == "king" && x.Color == Color.Black);
+
+                    if (!positions.Any(p => p.X == king.Position.X && p.Y == king.Position.Y))
+                    {
+                        result.Add(pm);
+                    }
+                }
+
+            }
+
+            return result;
+        }
+
+        public List<Position> CheckMovePossible(Piece piece, List<Position> possibleMoves, string p)
+        {
+            List<Position> result = new List<Position>();
+
+            string[,] tempBoard = new string[8, 8];
+
+
+            foreach (var pm in possibleMoves)
+            {
+                for (int i = 0; i <= 7; i++)
+                {
+                    for (int j = 0; j <= 7; j++)
+                    {
+                        tempBoard[i, j] = Board[i, j];
+                    }
+                }
+
+                tempBoard[piece.Position.Y, piece.Position.X] = "0";
+                tempBoard[pm.Y, pm.X] = p;
+                List<Piece> pieces = GetPieces(tempBoard);
+
+                if (Turn == Color.White)
+                {
+                    List<Position> positions = new List<Position>();
+                    Node node = new Node(this);
+                    node.Board = tempBoard;
+                    node.Check = false;
+
+                    foreach (var piece2 in pieces.Where(p => p.Color == Color.Black))
+                    {
+                        positions.AddRange(piece2.GetPossibleMoves(node, tempBoard, false));
+                    }
+
+                    Piece king = pieces.FirstOrDefault(x => x.PieceType() == "king" && x.Color == Color.White);
+
+                    if (!positions.Any(p => p.X == king.Position.X && p.Y == king.Position.Y))
+                    {
+                        result.Add(pm);
+                    }
+                }
+                else
+                {
+                    List<Position> positions = new List<Position>();
+                    Node node = new Node(this);
+                    node.Board = tempBoard;
+                    node.Check = false;
+
+                    foreach (var piece2 in pieces.Where(p => p.Color == Color.White))
+                    {
+                        positions.AddRange(piece2.GetPossibleMoves(node, tempBoard, false));
                     }
 
                     Piece king = pieces.FirstOrDefault(x => x.PieceType() == "king" && x.Color == Color.Black);

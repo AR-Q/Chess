@@ -1,4 +1,5 @@
 ﻿using Chess.Classes.Pieces;
+using Chess.Forms;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -196,7 +197,7 @@ namespace Chess.Classes
 
                 foreach (var piece in Pieces.Where(p => p.Color == Color.Black))
                 {
-                    positions.AddRange(piece.GetPossibleMoves(ChessTree.GetCurrentNode(),ChessTree.GetCurrentNode().Board));
+                    positions.AddRange(piece.GetPossibleMoves(ChessTree.GetCurrentNode(),ChessTree.GetCurrentNode().Board,false));
                 }
 
                 Piece king = Pieces.FirstOrDefault(x => x.PieceType() == "king" && x.Color == Color.White);
@@ -216,7 +217,7 @@ namespace Chess.Classes
 
                 foreach (var piece in Pieces.Where(p => p.Color == Color.White))
                 {
-                    positions.AddRange(piece.GetPossibleMoves(ChessTree.GetCurrentNode(), ChessTree.GetCurrentNode().Board));
+                    positions.AddRange(piece.GetPossibleMoves(ChessTree.GetCurrentNode(), ChessTree.GetCurrentNode().Board,false));
                 }
 
                 Piece king = Pieces.FirstOrDefault(x => x.PieceType() == "king" && x.Color == Color.Black);
@@ -229,6 +230,55 @@ namespace Chess.Classes
                 {
                     return false;
                 }
+            }
+        }
+
+        public bool IsMate()
+        {
+            if (GetTurn() == Color.Black && ChessTree.GetCurrentNode().Check)
+            {
+                List<Position> positions = new List<Position>();
+
+                foreach (var piece in Pieces.Where(p => p.Color == Color.White))
+                {
+                    positions.AddRange(piece.GetPossibleMoves(ChessTree.GetCurrentNode(), ChessTree.GetCurrentNode().Board, false));
+                }
+
+                if(positions.Count == 0)
+                {
+                    End end = new End(Color.Black);
+                    end.Show();
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
+            }
+            else if (GetTurn() == Color.White && ChessTree.GetCurrentNode().Check)
+            {
+                List<Position> positions = new List<Position>();
+
+                foreach (var piece in Pieces.Where(p => p.Color == Color.Black))
+                {
+                    List<Position> temp = piece.GetPossibleMoves(ChessTree.GetCurrentNode(), ChessTree.GetCurrentNode().Board, true);
+                    positions.AddRange(temp);
+                }
+
+                if (positions.Count == 0)
+                {
+                    End end = new End(Color.White);
+                    end.Show();
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
+            }
+            else
+            {
+                return false;
             }
         }
     }

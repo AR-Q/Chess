@@ -125,7 +125,7 @@ namespace Chess.Forms
 
                     if(piece.Color == Game.ChessTree.GetCurrentNode().Turn)
                     {
-                        List<Position> positions = piece.GetPossibleMoves(Game.ChessTree.GetCurrentNode(), Game.ChessTree.GetCurrentNode().Board);
+                        List<Position> positions = piece.GetPossibleMoves(Game.ChessTree.GetCurrentNode(), Game.ChessTree.GetCurrentNode().Board,true);
                         possiblePositions = positions;
                         selected = piece;
 
@@ -303,8 +303,10 @@ namespace Chess.Forms
                 };
 
                 Game.ChessTree.AddNode(node);
+                
 
                 Setups.SetupBoard(Game.Pieces, Buttons);
+                Game.IsMate();
                 Check();
 
             }

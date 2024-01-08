@@ -17,7 +17,7 @@ namespace Chess.Classes.Pieces
             Color = color;
         }
 
-        public abstract List<Position> GetPossibleMoves(Node node, string[,] board);
+        public abstract List<Position> GetPossibleMoves(Node node, string[,] board, bool CheckContol);
 
         public abstract string PieceType();
     }

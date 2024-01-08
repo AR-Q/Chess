@@ -12,7 +12,7 @@ namespace Chess.Classes.Pieces
         {
 
         }
-        public override List<Position> GetPossibleMoves(Node node, string[,] board)
+        public override List<Position> GetPossibleMoves(Node node, string[,] board, bool CheckContol)
         {
             List<Position> possibleMoves = new List<Position>();
 
@@ -111,6 +111,19 @@ namespace Chess.Classes.Pieces
                     p = "R";
                 }
                 possibleMoves = node.CheckMove(this, possibleMoves,p);
+            }
+            else if(possibleMoves.Count != 0 && CheckContol)
+            {
+                string p;
+                if (Color == Color.Black)
+                {
+                    p = "r";
+                }
+                else
+                {
+                    p = "R";
+                }
+                possibleMoves = node.CheckMovePossible(this, possibleMoves, p);
             }
 
             return possibleMoves;
