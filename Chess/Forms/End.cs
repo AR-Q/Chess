@@ -12,17 +12,10 @@ namespace Chess.Forms
 {
     public partial class End : Form
     {
-        public End(Classes.Color color)
+        public End(string text)
         {
             InitializeComponent();
-            if (color == Classes.Color.White)
-            {
-                label1.Text = "White Win";
-            }
-            else
-            {
-                label1.Text = "Black Win";
-            }
+            label1.Text = text;
         }
         
     }

@@ -148,6 +148,7 @@ namespace Chess.Forms
             string enPassant = "-";
             Position last = selected.Position;
             string type = selected.PieceType();
+            int draw = Game.ChessTree.GetCurrentNode().Draw + 1;
 
             string castle = Game.ChessTree.GetCurrentNode().Castle;
 
@@ -205,21 +206,21 @@ namespace Chess.Forms
                 if (last.Y == 6 && y == 4)
                 {
                     enPassant = Convert.ToString(x) + Convert.ToString(5);
+                    draw = 0;
                 }
                 else if (last.Y == 1 && y == 3)
                 {
-
                     enPassant = Convert.ToString(x) + Convert.ToString(2);
+                    draw = 0;
                 }
             }
 
             if (possiblePositions.Any(p => p.X == x && p.Y == y))
             {
-                
 
                 if(Game.Pieces.Any(p => p.Position.X == x && p.Position.Y == y))
                 {
-                    
+                    draw = 0;
                     Piece piece = Game.Pieces.FirstOrDefault(p => p.Position.X == x && p.Position.Y == y);
                     Game.Pieces.Remove(piece);
                     Game.TakenPiece.Add(piece);
@@ -254,6 +255,7 @@ namespace Chess.Forms
                             Piece piece = Game.Pieces.FirstOrDefault(p => p.Position.X == x && p.Position.Y == y + 1);
                             Game.Pieces.Remove(piece);
                             Game.TakenPiece.Add(piece);
+                            draw = 0;
                         }
                     }
                     else if (x == ex && y == ey && Game.ChessTree.GetCurrentNode().Turn == Classes.Color.Black)
@@ -263,6 +265,7 @@ namespace Chess.Forms
                             Piece piece = Game.Pieces.FirstOrDefault(p => p.Position.X == x && p.Position.Y == y - 1);
                             Game.Pieces.Remove(piece);
                             Game.TakenPiece.Add(piece);
+                            draw = 0;
                         }
                     }
                 }
@@ -335,7 +338,7 @@ namespace Chess.Forms
                     Castle = castle,
                     Turn = Game.GetTurn(), 
                     EnPassant = enPassant, 
-                    Draw = 0, // Function
+                    Draw = draw,
                     Total = Game.ChessTree.GetCurrentNode().Total + 1,
                     Check = Game.isChecked(),
                 };
@@ -345,6 +348,7 @@ namespace Chess.Forms
 
                 Setups.SetupBoard(Game.Pieces, Buttons);
                 Game.IsMate();
+                Game.IsDraw();
                 Check();
 
             }
@@ -372,7 +376,7 @@ namespace Chess.Forms
                     Castle = caslte, 
                     Turn = Game.GetTurn(),
                     EnPassant = "-",
-                    Draw = 0, // Function
+                    Draw = 0,
                     Total = Game.ChessTree.GetCurrentNode().Total + 1,
                     Check = Game.isChecked(), 
                 };
@@ -381,6 +385,7 @@ namespace Chess.Forms
 
                 Setups.SetupBoard(Game.Pieces, Buttons);
                 Game.IsMate();
+                Game.IsDraw();
                 Check();
 
             }

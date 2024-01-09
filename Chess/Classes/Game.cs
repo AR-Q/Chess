@@ -246,7 +246,7 @@ namespace Chess.Classes
 
                 if(positions.Count == 0)
                 {
-                    End end = new End(Color.Black);
+                    End end = new End("Black Win");
                     end.Show();
                     return true;
                 }
@@ -267,7 +267,7 @@ namespace Chess.Classes
 
                 if (positions.Count == 0)
                 {
-                    End end = new End(Color.White);
+                    End end = new End("White Win");
                     end.Show();
                     return true;
                 }
@@ -280,6 +280,32 @@ namespace Chess.Classes
             {
                 return false;
             }
+        }
+
+        public bool IsDraw()
+        {
+            if(ChessTree.GetCurrentNode().Draw >= 100)
+            {
+                End end = new End("Draw");
+                end.Show();
+                return true;
+            }
+
+            Color color = ChessTree.GetCurrentNode().Turn;
+
+            List<Position> positions = new List<Position>();
+
+            foreach (var piece in ChessTree.GetCurrentNode().GetPieces(ChessTree.GetCurrentNode().Board).Where(p => p.Color == color))
+            {
+                positions.AddRange(piece.GetPossibleMoves(ChessTree.GetCurrentNode(), ChessTree.GetCurrentNode().Board, false));
+            }
+
+            if(positions.Count == 0)
+            {
+                return true;
+            }
+
+            return false;
         }
     }
 }
