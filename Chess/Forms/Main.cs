@@ -5,14 +5,18 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Data;
+using System.Diagnostics.Metrics;
 using System.Drawing;
 using System.Linq;
 using System.Reflection;
 using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Threading.Tasks;
+using System.Timers;
 using System.Windows.Forms;
 using System.Xml.Linq;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement;
+using Button = System.Windows.Forms.Button;
 
 namespace Chess.Forms
 {
@@ -24,14 +28,46 @@ namespace Chess.Forms
         List<Position> possiblePositions;
         Piece selected;
         public Piece promotePiece;
+        double counter;
+        System.Windows.Forms.Timer t;
 
         public Main()
         {
             InitializeComponent();
+            //Setups.SetupTakenPiece(TakenLV);
+            counter = 30.00;
+            lblTimer.Text = String.Format("{0:0.0}", counter);
             Buttons = new Button[8, 8];
             SetButtons();
-            Game = new Game(Buttons, "test.txt");
+            Game = new Game(Buttons, "test.txt", Tree);
             promotePiece = null;
+            t = new System.Windows.Forms.Timer();
+            t.Interval = 100; // specify interval time as you want
+            t.Tick += new EventHandler(OnTimedEvent);
+            t.Start();
+        }
+
+        private void OnTimedEvent(object sender, EventArgs e)
+        {
+            counter -= 0.1;
+            lblTimer.Text = String.Format("{0:0.0}", counter);
+            if (counter <= 0.0)
+            {
+                if(Game.ChessTree.GetCurrentNode().Turn == Classes.Color.White)
+                {
+                    t.Stop();
+                    End end = new End("Black Win");
+                    end.Show();
+                    return;
+                }
+                else
+                {
+                    t.Stop();
+                    End end = new End("White Win");
+                    end.Show();
+                    return;
+                }
+            }
         }
 
         public void SetButtons()
@@ -347,9 +383,12 @@ namespace Chess.Forms
                 
 
                 Setups.SetupBoard(Game.Pieces, Buttons);
+                Setups.SetupTree(Tree, Game.ChessTree);
+                Setups.SetupTakenPiece(Game.TakenPiece, TakenLV);
                 Game.IsMate();
                 Game.IsDraw();
                 Check();
+                counter = 30;
 
             }
 
@@ -384,6 +423,8 @@ namespace Chess.Forms
                 Game.ChessTree.AddNode(node);
 
                 Setups.SetupBoard(Game.Pieces, Buttons);
+                Setups.SetupTree(Tree, Game.ChessTree);
+                Setups.SetupTakenPiece(Game.TakenPiece, TakenLV);
                 Game.IsMate();
                 Game.IsDraw();
                 Check();
@@ -721,6 +762,32 @@ namespace Chess.Forms
         private void btn77_Click(object sender, EventArgs e)
         {
             BtnClick(7, 7);
+        }
+
+        private void btnUbdo_Click(object sender, EventArgs e)
+        {
+            //counter = 30.0;
+            //Game.ChessTree.Undo();
+            //Game.Pieces = Game.ChessTree.GetCurrentNode().GetPieces(Game.ChessTree.GetCurrentNode().Board);
+            //Setups.SetupBoard(Game.Pieces, Buttons);
+            //Setups.SetupTree(Tree, Game.ChessTree);
+            //Setups.SetupTakenPiece(Game.TakenPiece, TakenLV);
+
+            var node = Tree.SelectedNode;
+
+            if(node == null)
+            {
+                return;
+            }
+
+            string a = node.ToString();
+            counter = 30.0;
+            Game.ChessTree.ChangeCurrent(a);
+            Game.Pieces = Game.ChessTree.GetCurrentNode().GetPieces(Game.ChessTree.GetCurrentNode().Board);
+            Setups.SetupBoard(Game.Pieces, Buttons);
+            Setups.SetupTree(Tree, Game.ChessTree);
+            Setups.SetupTakenPiece(Game.TakenPiece, TakenLV);
+
         }
     }
 }

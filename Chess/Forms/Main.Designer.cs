@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             this.btn00 = new System.Windows.Forms.Button();
             this.btn01 = new System.Windows.Forms.Button();
             this.btn02 = new System.Windows.Forms.Button();
@@ -92,6 +93,12 @@
             this.btn42 = new System.Windows.Forms.Button();
             this.btn41 = new System.Windows.Forms.Button();
             this.btn40 = new System.Windows.Forms.Button();
+            this.lblTimer = new System.Windows.Forms.Label();
+            this.label1 = new System.Windows.Forms.Label();
+            this.btnUbdo = new System.Windows.Forms.Button();
+            this.TakenLV = new System.Windows.Forms.ListView();
+            this.imageList = new System.Windows.Forms.ImageList(this.components);
+            this.Tree = new System.Windows.Forms.TreeView();
             this.SuspendLayout();
             // 
             // btn00
@@ -702,12 +709,73 @@
             this.btn40.UseVisualStyleBackColor = true;
             this.btn40.Click += new System.EventHandler(this.btn40_Click);
             // 
+            // lblTimer
+            // 
+            this.lblTimer.AutoSize = true;
+            this.lblTimer.Font = new System.Drawing.Font("Showcard Gothic", 30F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.lblTimer.Location = new System.Drawing.Point(1476, 26);
+            this.lblTimer.Name = "lblTimer";
+            this.lblTimer.Size = new System.Drawing.Size(192, 62);
+            this.lblTimer.TabIndex = 64;
+            this.lblTimer.Text = "label1";
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Font = new System.Drawing.Font("Showcard Gothic", 30F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.label1.Location = new System.Drawing.Point(1252, 26);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(218, 62);
+            this.label1.TabIndex = 65;
+            this.label1.Text = "Timer : ";
+            // 
+            // btnUbdo
+            // 
+            this.btnUbdo.BackColor = System.Drawing.Color.Cyan;
+            this.btnUbdo.Font = new System.Drawing.Font("Showcard Gothic", 19.8F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point);
+            this.btnUbdo.Location = new System.Drawing.Point(1115, 194);
+            this.btnUbdo.Name = "btnUbdo";
+            this.btnUbdo.Size = new System.Drawing.Size(241, 111);
+            this.btnUbdo.TabIndex = 66;
+            this.btnUbdo.Text = "Undo";
+            this.btnUbdo.UseVisualStyleBackColor = false;
+            this.btnUbdo.Click += new System.EventHandler(this.btnUbdo_Click);
+            // 
+            // TakenLV
+            // 
+            this.TakenLV.LargeImageList = this.imageList;
+            this.TakenLV.Location = new System.Drawing.Point(1000, 381);
+            this.TakenLV.Name = "TakenLV";
+            this.TakenLV.Size = new System.Drawing.Size(897, 248);
+            this.TakenLV.TabIndex = 67;
+            this.TakenLV.UseCompatibleStateImageBehavior = false;
+            
+            // 
+            // imageList
+            // 
+            this.imageList.ColorDepth = System.Windows.Forms.ColorDepth.Depth8Bit;
+            this.imageList.ImageSize = new System.Drawing.Size(145, 145);
+            this.imageList.TransparentColor = System.Drawing.Color.Transparent;
+            // 
+            // Tree
+            // 
+            this.Tree.HideSelection = false;
+            this.Tree.Location = new System.Drawing.Point(1000, 754);
+            this.Tree.Name = "Tree";
+            this.Tree.Size = new System.Drawing.Size(897, 244);
+            this.Tree.TabIndex = 68;
+            // 
             // Main
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.ClientSize = new System.Drawing.Size(1902, 1035);
+            this.Controls.Add(this.Tree);
+            this.Controls.Add(this.TakenLV);
+            this.Controls.Add(this.btnUbdo);
+            this.Controls.Add(this.label1);
+            this.Controls.Add(this.lblTimer);
             this.Controls.Add(this.btn70);
             this.Controls.Add(this.btn77);
             this.Controls.Add(this.btn76);
@@ -776,6 +844,7 @@
             this.Name = "Main";
             this.Text = "Chess";
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 
@@ -845,5 +914,11 @@
         private Button btn42;
         private Button btn41;
         private Button btn40;
+        private Label lblTimer;
+        private Label label1;
+        private Button btnUbdo;
+        private ListView TakenLV;
+        private TreeView Tree;
+        private ImageList imageList;
     }
 }

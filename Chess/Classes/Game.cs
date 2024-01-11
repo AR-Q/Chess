@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Timers;
 
 namespace Chess.Classes
 {
@@ -15,9 +16,9 @@ namespace Chess.Classes
         public ChessTree ChessTree { get; set; }
         public FileManager fileManager;
 
-        public Game(Button[,] Buttons, string filePath)
+        public Game(Button[,] Buttons, string filePath, TreeView tree)
         {
-            
+
             Pieces = new List<Piece>();
             TakenPiece = new List<Piece>();
             ChessTree = new ChessTree(filePath);
@@ -84,6 +85,7 @@ namespace Chess.Classes
             Pieces.Add(new Pawn(new Position(7, 6), Color.White));
 
             Setups.SetupBoard(Pieces , Buttons);
+            Setups.SetupTree(tree, ChessTree);
         }
 
         public Color GetTurn()
@@ -300,8 +302,10 @@ namespace Chess.Classes
                 positions.AddRange(piece.GetPossibleMoves(ChessTree.GetCurrentNode(), ChessTree.GetCurrentNode().Board, false));
             }
 
-            if(positions.Count == 0)
+            if(positions.Count == 0 && !ChessTree.GetCurrentNode().Check )
             {
+                End end = new End("Draw");
+                end.Show();
                 return true;
             }
 
