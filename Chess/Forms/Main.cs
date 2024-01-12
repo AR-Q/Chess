@@ -15,6 +15,7 @@ using System.Threading.Tasks;
 using System.Timers;
 using System.Windows.Forms;
 using System.Xml.Linq;
+using static System.Windows.Forms.DataFormats;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 using Button = System.Windows.Forms.Button;
 
@@ -30,16 +31,20 @@ namespace Chess.Forms
         public Piece promotePiece;
         double counter;
         System.Windows.Forms.Timer t;
+        Menu father;
 
-        public Main()
+        public Main(Menu father, string path)
         {
             InitializeComponent();
+            this.father = father;
             //Setups.SetupTakenPiece(TakenLV);
             counter = 30.00;
             lblTimer.Text = String.Format("{0:0.0}", counter);
             Buttons = new Button[8, 8];
             SetButtons();
-            Game = new Game(Buttons, "test.txt", Tree);
+
+                Game = new Game(Buttons, path, Tree, false, TakenLV);
+                lnlTurn.Text = Classes.Color.White.ToString();
             promotePiece = null;
             t = new System.Windows.Forms.Timer();
             t.Interval = 100; // specify interval time as you want
@@ -47,13 +52,32 @@ namespace Chess.Forms
             t.Start();
         }
 
+        public Main(string path)
+        {
+            InitializeComponent();
+            //Setups.SetupTakenPiece(TakenLV);
+            counter = 30.00;
+            lblTimer.Text = String.Format("{0:0.0}", counter);
+            Buttons = new Button[8, 8];
+            SetButtons();
+            Game = new Game(Buttons, path, Tree, true,TakenLV);
+            lnlTurn.Text = Classes.Color.White.ToString();
+            promotePiece = null;
+            t = new System.Windows.Forms.Timer();
+            t.Interval = 100; // specify interval time as you want
+            t.Tick += new EventHandler(OnTimedEvent);
+            t.Start();
+        }
+
+
+
         private void OnTimedEvent(object sender, EventArgs e)
         {
             counter -= 0.1;
             lblTimer.Text = String.Format("{0:0.0}", counter);
             if (counter <= 0.0)
             {
-                if(Game.ChessTree.GetCurrentNode().Turn == Classes.Color.White)
+                if (Game.ChessTree.GetCurrentNode().Turn == Classes.Color.White)
                 {
                     t.Stop();
                     End end = new End("Black Win");
@@ -146,22 +170,22 @@ namespace Chess.Forms
         }
 
 
-        public void BtnClick(int x,int y)
+        public void BtnClick(int x, int y)
         {
             Setups.SetDefaultColor(Buttons);
             Check();
 
             Piece piece = Game.Pieces.FirstOrDefault(p => p.Position.X == x && p.Position.Y == y);
 
-            if(possiblePositions == null)
+            if (possiblePositions == null)
             {
 
                 if (piece != null)
                 {
 
-                    if(piece.Color == Game.ChessTree.GetCurrentNode().Turn)
+                    if (piece.Color == Game.ChessTree.GetCurrentNode().Turn)
                     {
-                        List<Position> positions = piece.GetPossibleMoves(Game.ChessTree.GetCurrentNode(), Game.ChessTree.GetCurrentNode().Board,true);
+                        List<Position> positions = piece.GetPossibleMoves(Game.ChessTree.GetCurrentNode(), Game.ChessTree.GetCurrentNode().Board, true);
                         possiblePositions = positions;
                         selected = piece;
 
@@ -174,9 +198,9 @@ namespace Chess.Forms
             }
             else
             {
-                MovePieces(x,y);
+                MovePieces(x, y);
             }
-            
+
         }
 
         public void MovePieces(int x, int y)
@@ -188,7 +212,7 @@ namespace Chess.Forms
 
             string castle = Game.ChessTree.GetCurrentNode().Castle;
 
-            if(type=="king" && selected.Color == Classes.Color.White)
+            if (type == "king" && selected.Color == Classes.Color.White)
             {
                 if (castle.Contains("KQ"))
                 {
@@ -202,9 +226,9 @@ namespace Chess.Forms
                     castle = castle.Replace("kq", "");
                 }
             }
-            else if(type == "rook" && selected.Color == Classes.Color.White)
+            else if (type == "rook" && selected.Color == Classes.Color.White)
             {
-                if(selected.Position.X == 7 && selected.Position.Y == 7)
+                if (selected.Position.X == 7 && selected.Position.Y == 7)
                 {
                     if (castle.Contains("K"))
                     {
@@ -254,7 +278,7 @@ namespace Chess.Forms
             if (possiblePositions.Any(p => p.X == x && p.Y == y))
             {
 
-                if(Game.Pieces.Any(p => p.Position.X == x && p.Position.Y == y))
+                if (Game.Pieces.Any(p => p.Position.X == x && p.Position.Y == y))
                 {
                     draw = 0;
                     Piece piece = Game.Pieces.FirstOrDefault(p => p.Position.X == x && p.Position.Y == y);
@@ -279,12 +303,12 @@ namespace Chess.Forms
                         }
                     }
                 }
-                else if(type == "pawn" && Game.ChessTree.GetCurrentNode().EnPassant != "-")
+                else if (type == "pawn" && Game.ChessTree.GetCurrentNode().EnPassant != "-")
                 {
                     int ex = Game.ChessTree.GetCurrentNode().EnPassant[0] - 48;
                     int ey = Game.ChessTree.GetCurrentNode().EnPassant[1] - 48;
 
-                    if(x == ex && y == ey && Game.ChessTree.GetCurrentNode().Turn == Classes.Color.White)
+                    if (x == ex && y == ey && Game.ChessTree.GetCurrentNode().Turn == Classes.Color.White)
                     {
                         if (Game.Pieces.Any(p => p.Position.X == x && p.Position.Y == y + 1))
                         {
@@ -325,11 +349,11 @@ namespace Chess.Forms
                     }
                 }
 
-                if(type == "king")
+                if (type == "king")
                 {
-                    if(selected.Color == Classes.Color.White)
+                    if (selected.Color == Classes.Color.White)
                     {
-                        if(last.X == 4 && last.Y == 7 && x == 6 && y == 7)
+                        if (last.X == 4 && last.Y == 7 && x == 6 && y == 7)
                         {
                             Piece rook = Game.Pieces.FirstOrDefault(p => p.Position.X == 7 && p.Position.Y == 7);
 
@@ -346,7 +370,7 @@ namespace Chess.Forms
                     }
                     else
                     {
-                        if(last.X == 4 && last.Y == 0 && x == 6 && y == 0)
+                        if (last.X == 4 && last.Y == 0 && x == 6 && y == 0)
                         {
                             Piece rook = Game.Pieces.FirstOrDefault(p => p.Position.X == 7 && p.Position.Y == 0);
 
@@ -372,16 +396,16 @@ namespace Chess.Forms
                     Move = Classes.Move.Move,
                     Board = Game.GetFENBoard(),
                     Castle = castle,
-                    Turn = Game.GetTurn(), 
-                    EnPassant = enPassant, 
+                    Turn = Game.GetTurn(),
+                    EnPassant = enPassant,
                     Draw = draw,
                     Total = Game.ChessTree.GetCurrentNode().Total + 1,
                     Check = Game.isChecked(),
                 };
 
                 Game.ChessTree.AddNode(node);
-                
 
+                lnlTurn.Text = node.Turn.ToString();
                 Setups.SetupBoard(Game.Pieces, Buttons);
                 Setups.SetupTree(Tree, Game.ChessTree);
                 Setups.SetupTakenPiece(Game.TakenPiece, TakenLV);
@@ -412,16 +436,16 @@ namespace Chess.Forms
                 {
                     Move = Classes.Move.Move,
                     Board = Game.GetFENBoard(),
-                    Castle = caslte, 
+                    Castle = caslte,
                     Turn = Game.GetTurn(),
                     EnPassant = "-",
                     Draw = 0,
                     Total = Game.ChessTree.GetCurrentNode().Total + 1,
-                    Check = Game.isChecked(), 
+                    Check = Game.isChecked(),
                 };
 
                 Game.ChessTree.AddNode(node);
-
+                lnlTurn.Text = node.Turn.ToString();
                 Setups.SetupBoard(Game.Pieces, Buttons);
                 Setups.SetupTree(Tree, Game.ChessTree);
                 Setups.SetupTakenPiece(Game.TakenPiece, TakenLV);
@@ -775,7 +799,7 @@ namespace Chess.Forms
 
             var node = Tree.SelectedNode;
 
-            if(node == null)
+            if (node == null)
             {
                 return;
             }
@@ -784,9 +808,22 @@ namespace Chess.Forms
             counter = 30.0;
             Game.ChessTree.ChangeCurrent(a);
             Game.Pieces = Game.ChessTree.GetCurrentNode().GetPieces(Game.ChessTree.GetCurrentNode().Board);
+            Game.TakenPiece = Game.ChessTree.GetEatenPieece(Game.ChessTree.GetCurrentNode());
             Setups.SetupBoard(Game.Pieces, Buttons);
             Setups.SetupTree(Tree, Game.ChessTree);
             Setups.SetupTakenPiece(Game.TakenPiece, TakenLV);
+            lnlTurn.Text = Game.ChessTree.GetCurrentNode().Turn.ToString();
+        }
+
+        private void Main_FormClosing(object sender, EventArgs e)
+        {
+            t.Stop();
+            father.Dispose();
+            this.Dispose();
+        }
+
+        private void Main_Load(object sender, EventArgs e)
+        {
 
         }
     }

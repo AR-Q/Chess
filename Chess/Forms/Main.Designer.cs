@@ -29,6 +29,7 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Main));
             this.btn00 = new System.Windows.Forms.Button();
             this.btn01 = new System.Windows.Forms.Button();
             this.btn02 = new System.Windows.Forms.Button();
@@ -99,6 +100,8 @@
             this.TakenLV = new System.Windows.Forms.ListView();
             this.imageList = new System.Windows.Forms.ImageList(this.components);
             this.Tree = new System.Windows.Forms.TreeView();
+            this.label2 = new System.Windows.Forms.Label();
+            this.lnlTurn = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // btn00
@@ -227,11 +230,12 @@
             // 
             // btn13
             // 
+            this.btn13.BackColor = System.Drawing.SystemColors.Control;
             this.btn13.Location = new System.Drawing.Point(379, 135);
             this.btn13.Name = "btn13";
             this.btn13.Size = new System.Drawing.Size(125, 125);
             this.btn13.TabIndex = 10;
-            this.btn13.UseVisualStyleBackColor = true;
+            this.btn13.UseVisualStyleBackColor = false;
             this.btn13.Click += new System.EventHandler(this.btn13_Click);
             // 
             // btn12
@@ -713,7 +717,7 @@
             // 
             this.lblTimer.AutoSize = true;
             this.lblTimer.Font = new System.Drawing.Font("Showcard Gothic", 30F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.lblTimer.Location = new System.Drawing.Point(1476, 26);
+            this.lblTimer.Location = new System.Drawing.Point(1698, 28);
             this.lblTimer.Name = "lblTimer";
             this.lblTimer.Size = new System.Drawing.Size(192, 62);
             this.lblTimer.TabIndex = 64;
@@ -723,7 +727,7 @@
             // 
             this.label1.AutoSize = true;
             this.label1.Font = new System.Drawing.Font("Showcard Gothic", 30F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.label1.Location = new System.Drawing.Point(1252, 26);
+            this.label1.Location = new System.Drawing.Point(1474, 28);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(218, 62);
             this.label1.TabIndex = 65;
@@ -731,46 +735,82 @@
             // 
             // btnUbdo
             // 
-            this.btnUbdo.BackColor = System.Drawing.Color.Cyan;
+            this.btnUbdo.BackColor = System.Drawing.Color.DarkBlue;
             this.btnUbdo.Font = new System.Drawing.Font("Showcard Gothic", 19.8F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point);
-            this.btnUbdo.Location = new System.Drawing.Point(1115, 194);
+            this.btnUbdo.ForeColor = System.Drawing.Color.White;
+            this.btnUbdo.Location = new System.Drawing.Point(1000, 887);
             this.btnUbdo.Name = "btnUbdo";
-            this.btnUbdo.Size = new System.Drawing.Size(241, 111);
+            this.btnUbdo.Size = new System.Drawing.Size(897, 111);
             this.btnUbdo.TabIndex = 66;
-            this.btnUbdo.Text = "Undo";
+            this.btnUbdo.Text = "Change Move";
             this.btnUbdo.UseVisualStyleBackColor = false;
             this.btnUbdo.Click += new System.EventHandler(this.btnUbdo_Click);
             // 
             // TakenLV
             // 
+            this.TakenLV.Font = new System.Drawing.Font("Showcard Gothic", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.TakenLV.LargeImageList = this.imageList;
-            this.TakenLV.Location = new System.Drawing.Point(1000, 381);
+            this.TakenLV.Location = new System.Drawing.Point(1000, 135);
             this.TakenLV.Name = "TakenLV";
             this.TakenLV.Size = new System.Drawing.Size(897, 248);
             this.TakenLV.TabIndex = 67;
             this.TakenLV.UseCompatibleStateImageBehavior = false;
-            
             // 
             // imageList
             // 
             this.imageList.ColorDepth = System.Windows.Forms.ColorDepth.Depth8Bit;
-            this.imageList.ImageSize = new System.Drawing.Size(145, 145);
+            this.imageList.ImageStream = ((System.Windows.Forms.ImageListStreamer)(resources.GetObject("imageList.ImageStream")));
             this.imageList.TransparentColor = System.Drawing.Color.Transparent;
+            this.imageList.Images.SetKeyName(0, "bishop-b.png");
+            this.imageList.Images.SetKeyName(1, "bishop-w.png");
+            this.imageList.Images.SetKeyName(2, "king-b.png");
+            this.imageList.Images.SetKeyName(3, "king-w.png");
+            this.imageList.Images.SetKeyName(4, "pawn-b.png");
+            this.imageList.Images.SetKeyName(5, "pawn-w.png");
+            this.imageList.Images.SetKeyName(6, "queen-b.png");
+            this.imageList.Images.SetKeyName(7, "queen-w.png");
+            this.imageList.Images.SetKeyName(8, "rook-b.png");
+            this.imageList.Images.SetKeyName(9, "rook-w.png");
+            this.imageList.Images.SetKeyName(10, "knight-b.png");
+            this.imageList.Images.SetKeyName(11, "knight-w.png");
             // 
             // Tree
             // 
+            this.Tree.Font = new System.Drawing.Font("Showcard Gothic", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.Tree.HideSelection = false;
-            this.Tree.Location = new System.Drawing.Point(1000, 754);
+            this.Tree.Location = new System.Drawing.Point(1000, 448);
             this.Tree.Name = "Tree";
-            this.Tree.Size = new System.Drawing.Size(897, 244);
+            this.Tree.Size = new System.Drawing.Size(897, 415);
             this.Tree.TabIndex = 68;
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Font = new System.Drawing.Font("Showcard Gothic", 30F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.label2.Location = new System.Drawing.Point(1016, 28);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(197, 62);
+            this.label2.TabIndex = 70;
+            this.label2.Text = "Turn : ";
+            // 
+            // lnlTurn
+            // 
+            this.lnlTurn.AutoSize = true;
+            this.lnlTurn.Font = new System.Drawing.Font("Showcard Gothic", 30F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.lnlTurn.Location = new System.Drawing.Point(1202, 28);
+            this.lnlTurn.Name = "lnlTurn";
+            this.lnlTurn.Size = new System.Drawing.Size(0, 62);
+            this.lnlTurn.TabIndex = 69;
             // 
             // Main
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.BackColor = System.Drawing.Color.LightSkyBlue;
             this.ClientSize = new System.Drawing.Size(1902, 1035);
+            this.Controls.Add(this.label2);
+            this.Controls.Add(this.lnlTurn);
             this.Controls.Add(this.Tree);
             this.Controls.Add(this.TakenLV);
             this.Controls.Add(this.btnUbdo);
@@ -843,6 +883,7 @@
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Name = "Main";
             this.Text = "Chess";
+            this.Load += new System.EventHandler(this.Main_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -920,5 +961,7 @@
         private ListView TakenLV;
         private TreeView Tree;
         private ImageList imageList;
+        private Label label2;
+        private Label lnlTurn;
     }
 }

@@ -42,7 +42,7 @@ namespace Chess.Classes
             imageList.Images.Add("Whiteknight", new Bitmap(Chess.Properties.Resources.knight_w));
             imageList.Images.Add("Whiterook", new Bitmap(Chess.Properties.Resources.rook_w));
             imageList.Images.Add("Whitepawn", new Bitmap(Chess.Properties.Resources.pawn_w));
-            imageList.ImageSize = new Size(145, 145);
+            imageList.ImageSize = new Size(80, 80);
             listView.LargeImageList = imageList;
         }
 
@@ -55,7 +55,7 @@ namespace Chess.Classes
                 string imgKey = item.Color.ToString() + item.PieceType();
                 ListViewItem listViewItem = new ListViewItem(imgKey);
                 listViewItem.ImageKey = imgKey;
-                listView.Items.Add(imgKey);
+                listView.Items.Add(listViewItem);
             }
             
         }
@@ -100,11 +100,11 @@ namespace Chess.Classes
                 {
                     if((i + j) % 2 == 0)
                     {
-                        buttons[i, j].BackColor = System.Drawing.Color.FromArgb(242, 225, 195);
+                        buttons[i, j].BackColor = System.Drawing.Color.FromArgb(216, 216, 240);
                     }
                     else
                     {
-                        buttons[i, j].BackColor = System.Drawing.Color.FromArgb(195, 160, 130);
+                        buttons[i, j].BackColor = System.Drawing.Color.FromArgb(79, 79, 171);
                     }
                 }
             }

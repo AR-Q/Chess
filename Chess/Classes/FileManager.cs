@@ -16,7 +16,7 @@ namespace Chess.Classes
         }
 
 
-        public void ReadFile()
+        public void ReadFile(ChessTree chessTree)
         {
             string line;
             try
@@ -26,10 +26,30 @@ namespace Chess.Classes
                 //Read the first line of text
                 line = sr.ReadLine();
                 //Continue to read until you reach end of file
-                while (line != null)
+                while (line != "")
                 {
                     //write the line to console window
-                    
+                    Node node = chessTree.LoadNode(line);
+
+                    if(node == null)
+                    {
+                        break;
+                    }
+
+                    if(node.Move == Move.Start)
+                    {
+                        chessTree.AddNode(node);
+                    }
+                    else if(node.Move == Move.Move)
+                    {
+                        chessTree.AddNode(node);
+                    }
+                    else if (node.Move == Move.Undo)
+                    {
+                        chessTree.ChangeCurrentLoad(node.FENBoard());
+                    }
+
+                    line = sr.ReadLine();
                 }
                 //close the file
                 sr.Close();
