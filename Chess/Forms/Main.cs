@@ -173,7 +173,6 @@ namespace Chess.Forms
         public void BtnClick(int x, int y)
         {
             Setups.SetDefaultColor(Buttons);
-            Check();
 
             Piece piece = Game.Pieces.FirstOrDefault(p => p.Position.X == x && p.Position.Y == y);
 
@@ -189,9 +188,11 @@ namespace Chess.Forms
                         possiblePositions = positions;
                         selected = piece;
 
+                        int i = 50;
                         foreach (var position in positions)
                         {
-                            Buttons[position.Y, position.X].BackColor = System.Drawing.Color.SkyBlue;
+                            Buttons[position.Y, position.X].BackColor = System.Drawing.Color.FromArgb(i, 200, 200);
+                            i += 150/positions.Count;
                         }
                     }
                 }
@@ -409,15 +410,15 @@ namespace Chess.Forms
                 Setups.SetupBoard(Game.Pieces, Buttons);
                 Setups.SetupTree(Tree, Game.ChessTree);
                 Setups.SetupTakenPiece(Game.TakenPiece, TakenLV);
-                Game.IsMate();
-                Game.IsDraw();
-                Check();
                 counter = 30;
 
             }
 
             selected = null;
             possiblePositions = null;
+            Game.IsMate();
+            Game.IsDraw();
+            Check();
         }
 
 
@@ -449,14 +450,14 @@ namespace Chess.Forms
                 Setups.SetupBoard(Game.Pieces, Buttons);
                 Setups.SetupTree(Tree, Game.ChessTree);
                 Setups.SetupTakenPiece(Game.TakenPiece, TakenLV);
-                Game.IsMate();
-                Game.IsDraw();
-                Check();
+
 
             }
 
             selected = null;
             possiblePositions = null;
+            Game.IsMate();
+            Game.IsDraw();
         }
 
         public void Check()
