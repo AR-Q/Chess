@@ -102,6 +102,7 @@
             this.Tree = new System.Windows.Forms.TreeView();
             this.label2 = new System.Windows.Forms.Label();
             this.lnlTurn = new System.Windows.Forms.Label();
+            this.btnReply = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // btn00
@@ -716,20 +717,20 @@
             // lblTimer
             // 
             this.lblTimer.AutoSize = true;
-            this.lblTimer.Font = new System.Drawing.Font("Showcard Gothic", 30F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.lblTimer.Location = new System.Drawing.Point(1698, 28);
+            this.lblTimer.Font = new System.Drawing.Font("Showcard Gothic", 25.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.lblTimer.Location = new System.Drawing.Point(1522, 28);
             this.lblTimer.Name = "lblTimer";
-            this.lblTimer.Size = new System.Drawing.Size(192, 62);
+            this.lblTimer.Size = new System.Drawing.Size(166, 53);
             this.lblTimer.TabIndex = 64;
             this.lblTimer.Text = "label1";
             // 
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Font = new System.Drawing.Font("Showcard Gothic", 30F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.label1.Location = new System.Drawing.Point(1474, 28);
+            this.label1.Font = new System.Drawing.Font("Showcard Gothic", 25.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.label1.Location = new System.Drawing.Point(1346, 28);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(218, 62);
+            this.label1.Size = new System.Drawing.Size(183, 53);
             this.label1.TabIndex = 65;
             this.label1.Text = "Timer : ";
             // 
@@ -786,21 +787,34 @@
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Font = new System.Drawing.Font("Showcard Gothic", 30F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.label2.Font = new System.Drawing.Font("Showcard Gothic", 25.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.label2.Location = new System.Drawing.Point(1016, 28);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(197, 62);
+            this.label2.Size = new System.Drawing.Size(168, 53);
             this.label2.TabIndex = 70;
             this.label2.Text = "Turn : ";
             // 
             // lnlTurn
             // 
             this.lnlTurn.AutoSize = true;
-            this.lnlTurn.Font = new System.Drawing.Font("Showcard Gothic", 30F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.lnlTurn.Location = new System.Drawing.Point(1202, 28);
+            this.lnlTurn.Font = new System.Drawing.Font("Showcard Gothic", 25.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.lnlTurn.Location = new System.Drawing.Point(1175, 28);
             this.lnlTurn.Name = "lnlTurn";
-            this.lnlTurn.Size = new System.Drawing.Size(0, 62);
+            this.lnlTurn.Size = new System.Drawing.Size(0, 53);
             this.lnlTurn.TabIndex = 69;
+            // 
+            // btnReply
+            // 
+            this.btnReply.BackColor = System.Drawing.Color.DarkBlue;
+            this.btnReply.Font = new System.Drawing.Font("Showcard Gothic", 24F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.btnReply.ForeColor = System.Drawing.Color.White;
+            this.btnReply.Location = new System.Drawing.Point(1689, 12);
+            this.btnReply.Name = "btnReply";
+            this.btnReply.Size = new System.Drawing.Size(201, 100);
+            this.btnReply.TabIndex = 71;
+            this.btnReply.Text = "Reply";
+            this.btnReply.UseVisualStyleBackColor = false;
+            this.btnReply.Click += new System.EventHandler(this.btnReply_Click);
             // 
             // Main
             // 
@@ -809,6 +823,7 @@
             this.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.BackColor = System.Drawing.Color.LightSkyBlue;
             this.ClientSize = new System.Drawing.Size(1902, 1035);
+            this.Controls.Add(this.btnReply);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.lnlTurn);
             this.Controls.Add(this.Tree);
@@ -963,5 +978,6 @@
         private ImageList imageList;
         private Label label2;
         private Label lnlTurn;
+        private Button btnReply;
     }
 }

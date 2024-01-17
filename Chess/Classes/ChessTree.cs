@@ -62,14 +62,19 @@ namespace Chess.Classes
             fileManager.WriteFile(_current);
         }
 
-        public void ChangeCurrent(string FENBoard)
+        public void ChangeCurrent(string FENBoard, bool Write = true)
         {
             _current = FindNode(FENBoard);
 
             //TODO Add To Log
-            _current.Move = Move.Undo;
-            fileManager.WriteFile(_current);
 
+            if (Write)
+            {
+
+                _current.Move = Move.Undo;
+                fileManager.WriteFile(_current);
+
+            }
         }
 
         public void ChangeCurrentLoad(string FENBoard)

@@ -31,7 +31,10 @@ namespace Chess.Forms
         public Piece promotePiece;
         double counter;
         System.Windows.Forms.Timer t;
+        System.Windows.Forms.Timer replyTimer;
         Menu father;
+        string _file;
+        int line;
 
         public Main(Menu father, string path)
         {
@@ -42,6 +45,7 @@ namespace Chess.Forms
             lblTimer.Text = String.Format("{0:0.0}", counter);
             Buttons = new Button[8, 8];
             SetButtons();
+            _file = path;
 
                 Game = new Game(Buttons, path, Tree, false, TakenLV);
                 lnlTurn.Text = Classes.Color.White.ToString();
@@ -60,6 +64,7 @@ namespace Chess.Forms
             lblTimer.Text = String.Format("{0:0.0}", counter);
             Buttons = new Button[8, 8];
             SetButtons();
+            _file = path;
             Game = new Game(Buttons, path, Tree, true,TakenLV);
             lnlTurn.Text = Classes.Color.White.ToString();
             promotePiece = null;
@@ -826,6 +831,95 @@ namespace Chess.Forms
         private void Main_Load(object sender, EventArgs e)
         {
 
+        }
+
+        private void btnReply_Click(object sender, EventArgs e)
+        {
+            for (int i = 0; i < 8; i++)
+            {
+                for (int j = 0; j < 8; j++)
+                {
+                    Buttons[i, j].Enabled = false;
+                }
+            }
+
+            btnUbdo.Enabled = false;
+
+            t.Stop();
+
+            replyTimer = new System.Windows.Forms.Timer();
+            replyTimer.Interval = 1000; // specify interval time as you want
+            replyTimer.Tick += new EventHandler(OnTimedEventReply);
+            replyTimer.Start();
+            line = 0;
+        }
+
+        private void OnTimedEventReply(object sender, EventArgs e)
+        {
+            bool check = false;
+            string line2 = "";
+            string a = "";
+            try
+            {
+                //Pass the file path and file name to the StreamReader constructor
+                StreamReader sr = new StreamReader(@"../../../Logs/" + _file);
+                //Read the first line of text
+                line2 = sr.ReadLine();
+                int counter = 0;
+                //Continue to read until you reach end of file
+                while (line2 != "")
+                {
+                    //write the line to console window
+                    if(line2 == null)
+                    {
+                        break;
+                    }
+
+                    if(counter == line)
+                    {
+                        check = true;
+                        a = line2.Split("|")[1];
+                        line++;
+                        break;
+                    }
+
+                    counter++;
+
+                    line2 = sr.ReadLine();
+                }
+                //close the file
+                sr.Close();
+                Console.ReadLine();
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Exception: " + ex.Message);
+            }
+
+            if (check)
+            {
+                Game.ChessTree.ChangeCurrent("TreeNode: " + a, false);
+                Game.Pieces = Game.ChessTree.GetCurrentNode().GetPieces(Game.ChessTree.GetCurrentNode().Board);
+                Game.TakenPiece = Game.ChessTree.GetEatenPieece(Game.ChessTree.GetCurrentNode());
+                Setups.SetupBoard(Game.Pieces, Buttons);
+                Setups.SetupTree(Tree, Game.ChessTree);
+                Setups.SetupTakenPiece(Game.TakenPiece, TakenLV);
+                lnlTurn.Text = Game.ChessTree.GetCurrentNode().Turn.ToString();
+            }
+            else
+            {
+                replyTimer.Stop();
+                t.Start();
+                for (int i = 0; i < 8; i++)
+                {
+                    for (int j = 0; j < 8; j++)
+                    {
+                        Buttons[i, j].Enabled = true;
+                    }
+                }
+
+                btnUbdo.Enabled = true;
+            }
         }
     }
 }
