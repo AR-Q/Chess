@@ -133,6 +133,14 @@ namespace Chess.Forms
                     t.Stop();
                     End end = new End("Black Win");
                     end.Show();
+                    for (int i = 0; i < 8; i++)
+                    {
+                        for (int j = 0; j < 8; j++)
+                        {
+                            Buttons[i, j].Enabled = false;
+                        }
+                    }
+                    t.Stop();
                     return;
                 }
                 else
@@ -140,6 +148,14 @@ namespace Chess.Forms
                     t.Stop();
                     End end = new End("White Win");
                     end.Show();
+                    for (int i = 0; i < 8; i++)
+                    {
+                        for (int j = 0; j < 8; j++)
+                        {
+                            Buttons[i, j].Enabled = false;
+                        }
+                    }
+                    t.Stop();
                     return;
                 }
             }

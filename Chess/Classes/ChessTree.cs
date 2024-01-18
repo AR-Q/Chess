@@ -218,19 +218,68 @@ namespace Chess.Classes
 
         public List<Piece> GetEatenPieece(Node undo)
         {
-            List<Piece> rootPiece = _current.GetPieces(_root.Board);
-            List<Piece> undoPiece = undo.GetPieces(undo.Board);
 
-            foreach (var up in undoPiece)
+            List<Node> nodes = new List<Node>();
+            Node n = undo;
+
+            while (true)
             {
-                Piece piece = rootPiece.FirstOrDefault(p => p.Color == up.Color && p.PieceType() == up.PieceType());
-                if(piece != null)
+                if(n == null)
                 {
-                    rootPiece.Remove(piece);
+                    break;
                 }
+
+                nodes.Add(n);
+                n = n.Father;
             }
 
-            return rootPiece;
+            nodes.Reverse();
+
+            if(nodes.Count <= 1)
+            {
+                return new List<Piece>();
+            }
+
+            Node p = nodes[0];
+            Node q = nodes[1];
+
+            List<Piece> takenPiece = new List<Piece>();
+
+            int i = 1;
+
+            while(p != null && p != null)
+            {
+                List<Piece> rootPiece = p.GetPieces(p.Board);
+                List<Piece> undoPiece = q.GetPieces(q.Board);
+
+                foreach (var up in undoPiece)
+                {
+                    Piece piece = rootPiece.FirstOrDefault(pi => pi.Color == up.Color && pi.PieceType() == up.PieceType());
+                    if (piece != null)
+                    {
+                        rootPiece.Remove(piece);
+                    }
+                }
+
+                if(rootPiece.Count > 1)
+                {
+                    Piece pawn = rootPiece.FirstOrDefault(x => x.PieceType() == "pawn");
+                    rootPiece.Remove(pawn);
+                }
+
+                takenPiece.AddRange(rootPiece);
+
+                if(i >= nodes.Count)
+                {
+                    break;
+                }
+                p = q;
+                q = nodes[i++];
+            }
+
+            
+
+            return takenPiece;
         }
     }
 }
