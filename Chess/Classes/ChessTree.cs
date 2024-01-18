@@ -251,6 +251,7 @@ namespace Chess.Classes
             {
                 List<Piece> rootPiece = p.GetPieces(p.Board);
                 List<Piece> undoPiece = q.GetPieces(q.Board);
+                List<Piece> undoPiece2 = q.GetPieces(q.Board);
 
                 foreach (var up in undoPiece)
                 {
@@ -258,13 +259,13 @@ namespace Chess.Classes
                     if (piece != null)
                     {
                         rootPiece.Remove(piece);
+                        undoPiece2.Remove(undoPiece2.FirstOrDefault(pi => pi.Color == up.Color && pi.PieceType() == up.PieceType()));
                     }
                 }
 
-                if(rootPiece.Count > 1)
+                if(undoPiece2.Count > 0)
                 {
-                    Piece pawn = rootPiece.FirstOrDefault(x => x.PieceType() == "pawn");
-                    rootPiece.Remove(pawn);
+                    rootPiece.Remove(rootPiece.FirstOrDefault(x => x.PieceType() == "pawn"));
                 }
 
                 takenPiece.AddRange(rootPiece);
