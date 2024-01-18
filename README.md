@@ -1,4 +1,4 @@
-Chess Project 
+Chess Game 
 Data Structer Project for University
 Using C# Windows Form
 Using FEN for Creating Log file
