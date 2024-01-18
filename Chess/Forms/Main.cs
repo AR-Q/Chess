@@ -54,6 +54,29 @@ namespace Chess.Forms
             t.Interval = 100; // specify interval time as you want
             t.Tick += new EventHandler(OnTimedEvent);
             t.Start();
+
+            if (Game.IsMate())
+            {
+                for (int i = 0; i < 8; i++)
+                {
+                    for (int j = 0; j < 8; j++)
+                    {
+                        Buttons[i, j].Enabled = false;
+                    }
+                }
+                t.Stop();
+            }
+            else
+            {
+                for (int i = 0; i < 8; i++)
+                {
+                    for (int j = 0; j < 8; j++)
+                    {
+                        Buttons[i, j].Enabled = true;
+                    }
+                }
+                t.Start();
+            }
         }
 
         public Main(string path)
@@ -72,6 +95,29 @@ namespace Chess.Forms
             t.Interval = 100; // specify interval time as you want
             t.Tick += new EventHandler(OnTimedEvent);
             t.Start();
+
+            if (Game.IsMate())
+            {
+                for (int i = 0; i < 8; i++)
+                {
+                    for (int j = 0; j < 8; j++)
+                    {
+                        Buttons[i, j].Enabled = false;
+                    }
+                }
+                t.Stop();
+            }
+            else
+            {
+                for (int i = 0; i < 8; i++)
+                {
+                    for (int j = 0; j < 8; j++)
+                    {
+                        Buttons[i, j].Enabled = true;
+                    }
+                }
+                t.Start();
+            }
         }
 
 
@@ -421,7 +467,17 @@ namespace Chess.Forms
 
             selected = null;
             possiblePositions = null;
-            Game.IsMate();
+            if (Game.IsMate())
+            {
+                for (int i = 0; i < 8; i++)
+                {
+                    for (int j = 0; j < 8; j++)
+                    {
+                        Buttons[i, j].Enabled = false;
+                    }
+                }
+                t.Stop();
+            }
             Game.IsDraw();
             Check();
         }
@@ -461,7 +517,17 @@ namespace Chess.Forms
 
             selected = null;
             possiblePositions = null;
-            Game.IsMate();
+            if (Game.IsMate())
+            {
+                for (int i = 0; i < 8; i++)
+                {
+                    for (int j = 0; j < 8; j++)
+                    {
+                        Buttons[i, j].Enabled = false;
+                    }
+                }
+                t.Stop();
+            }
             Game.IsDraw();
         }
 
@@ -819,6 +885,29 @@ namespace Chess.Forms
             Setups.SetupTree(Tree, Game.ChessTree);
             Setups.SetupTakenPiece(Game.TakenPiece, TakenLV);
             lnlTurn.Text = Game.ChessTree.GetCurrentNode().Turn.ToString();
+
+            if (Game.IsMate())
+            {
+                for (int i = 0; i < 8; i++)
+                {
+                    for (int j = 0; j < 8; j++)
+                    {
+                        Buttons[i, j].Enabled = false;
+                    }
+                }
+                t.Stop();
+            }
+            else
+            {
+                for (int i = 0; i < 8; i++)
+                {
+                    for (int j = 0; j < 8; j++)
+                    {
+                        Buttons[i, j].Enabled = true;
+                    }
+                }
+                t.Start();
+            }
         }
 
         private void Main_FormClosing(object sender, EventArgs e)
@@ -905,6 +994,8 @@ namespace Chess.Forms
                 Setups.SetupTree(Tree, Game.ChessTree);
                 Setups.SetupTakenPiece(Game.TakenPiece, TakenLV);
                 lnlTurn.Text = Game.ChessTree.GetCurrentNode().Turn.ToString();
+
+
             }
             else
             {
@@ -919,6 +1010,29 @@ namespace Chess.Forms
                 }
 
                 btnUbdo.Enabled = true;
+
+                if (Game.IsMate())
+                {
+                    for (int i = 0; i < 8; i++)
+                    {
+                        for (int j = 0; j < 8; j++)
+                        {
+                            Buttons[i, j].Enabled = false;
+                        }
+                    }
+                    t.Stop();
+                }
+                else
+                {
+                    for (int i = 0; i < 8; i++)
+                    {
+                        for (int j = 0; j < 8; j++)
+                        {
+                            Buttons[i, j].Enabled = true;
+                        }
+                    }
+                    t.Start();
+                }
             }
         }
     }

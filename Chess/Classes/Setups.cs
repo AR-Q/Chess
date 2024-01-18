@@ -151,7 +151,9 @@ namespace Chess.Classes
 
             res += Convert.ToString(node.Draw) + "|";
 
-            res += Convert.ToString(node.Total);
+            res += Convert.ToString(node.Total) + "|";
+
+            res += Convert.ToBoolean(node.Check);
 
             return res;
         }

@@ -165,6 +165,7 @@ namespace Chess.Classes
             node.EnPassant = array[4];
             node.Draw = Convert.ToInt32(array[5]);
             node.Total = Convert.ToInt32(array[6]);
+            node.Check = Convert.ToBoolean(array[7]);
 
             return node;
         }
